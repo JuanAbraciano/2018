@@ -2,6 +2,7 @@
   <div id="app">
     <carga @agregar="agregar"></carga>
     <filtro @filtrarPersonas="filtrarPersonas"></filtro>
+    <p v-if="totalPersonas">Se muestran {{totalPersonasFiltradas}} personas (de un total de {{totalPersonas}})</p>
     <card-persona v-for="p in personasFiltradas" :persona="p" :key="p.id" @borrarPersona="borrarPersona"></card-persona>
   </div>
 </template>
@@ -22,18 +23,23 @@ export default {
     return{
       idInicial: 0,
       personas: [],
-      criteria: 'todos'
+      criteria: 'todos',
+      totalPersonas: 0,
+      totalPersonasFiltradas: 0
     }
   },
   computed: {
-    total() {
-      return this.personas.length;
-    },
     personasFiltradas(){
+      this.totalPersonas = this.personas.length;
       if(this.criteria == 'todos')
+      {
+        this.totalPersonasFiltradas = this.totalPersonas;
         return this.personas;
-      else
+      }
+      else{
+        this.totalPersonasFiltradas = this.personas.filter(persona => persona.sexo == this.criteria).length;
         return this.personas.filter(persona => persona.sexo == this.criteria);
+      }
     }
   },
   methods: {
@@ -57,12 +63,13 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  #app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
+
+  }
 </style>
