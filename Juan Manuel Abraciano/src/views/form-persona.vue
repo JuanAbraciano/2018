@@ -1,8 +1,8 @@
 <template>
 	<section style="display:inline-block; margin-bottom:20px;">
-		<article style="text-align:left; margin-bottom:10px;">
-
-			<p>Ingrese una persona</p>
+		<article v-if="loading">Loading...</article>
+		<article v-else style="text-align:left; margin-bottom:10px;">
+			<p>Ingrese los datos de la persona a {{modoEdicion ? "editar" : "crear"}}</p>
 
 			<div >
 				<input class="input-textbox" type="text" v-model="persona.nombre" @change="validarNombre" placeholder="Nombre">
@@ -16,38 +16,78 @@
 				<input type="radio" v-model="persona.sexo" value="f">Mujer
 				<input type="radio" v-model="persona.sexo" value="m">Hombre
 			</div>
+			
+			<button @click="submitPersona()">Guardar</button>
 		</article>
-
-		<button @click="submitPersona()">Agregar</button>
 	</section>
 </template>
 
 <script>
 	import PersonService from '@/services/personService'
 	export default {
-	    name: 'crearPersona',
+	    name: 'formPersona',
 	    data() {
 	        return {
 	            persona: {
-			        nombre: "",
-			        edad: "",
-			        sexo: "f"
-		      	},
+					nombre: "",
+					edad: "",
+					sexo: "f",
+					id: -1
+				},
+				modoEdicion: false, 
+				loading: false,
 		      	errores:{
 		      		errorNombre: "",
 		      		errorEdad: ""
 		      	}
 	        }
-	    },
+		},
+		created() {
+			this.modoEdicion = this.$route.params.id > 0;
+			//Si estamos editando traigo a la persona
+			if(this.modoEdicion){
+				this.loading = true;
+				PersonService.traerUno(this.$route.params.id)
+					.then((persona) => {
+						this.persona = persona;
+						this.loading = false;
+					})
+					.catch((mensajeError) => {
+						alert(mensajeError);
+						this.loading = false;
+					});
+			}
+		},
 	    methods: {
 	        submitPersona() {
 				this.validarNombre(this.persona.nombre);
 				this.validarEdad(this.persona.edad);
 				if(!this.errores.errorNombre && !this.errores.errorEdad) 
 				{
-				 	PersonService.guardar(this.persona.nombre, this.persona.edad, this.persona.sexo);
-					this.persona.nombre = "";
-					this.persona.edad = "";
+					this.loading = true;
+					if(!this.modoEdicion){
+						PersonService.crearPersona(this.persona.nombre, this.persona.edad, this.persona.sexo)
+							.then((mensajeOk) => {
+								alert(mensajeOk);
+								this.loading = false;
+								this.persona.nombre = "";
+								this.persona.edad = "";	
+							})
+							.catch((mensajeError) => {
+								alert(mensajeError);
+								this.loading = false;
+							});					
+					} else{
+						PersonService.modificarPersona(this.persona.nombre, this.persona.edad, this.persona.sexo, this.persona.id)
+							.then((mensajeOk) => {
+								alert(mensajeOk);
+								this.loading = false;							
+							})
+							.catch((mensajeError) => {
+								alert(mensajeError);
+								this.loading = false;
+							});	
+					}
 				} 				
 			},
 			validarNombre(){

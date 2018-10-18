@@ -1,8 +1,9 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/lista">Home</router-link> |
-      <router-link to="/crear-persona">Crear persona</router-link>
+      <router-link to="/">Home</router-link> |
+      <router-link to="/lista">Personas</router-link> |
+      <router-link :to="{ name: 'formPersona', params: { id: -1 }}">Crear persona</router-link>
     </div>
     <router-view/>
   </div>
@@ -14,36 +15,6 @@ export default {
   data(){
     return{}
   }
-  // computed: {
-  //   personasFiltradas(){
-  //     this.totalPersonas = this.personas.length;
-  //     if(this.criteria == 'todos')
-  //     {
-  //       this.totalPersonasFiltradas = this.totalPersonas;
-  //       return this.personas;
-  //     }
-  //     else{
-  //       this.totalPersonasFiltradas = this.personas.filter(persona => persona.sexo == this.criteria).length;
-  //       return this.personas.filter(persona => persona.sexo == this.criteria);
-  //     }
-  //   }
-  // },
-  // methods: {
-  //   agregar(persona) {
-  //       this.personas.push({
-  //         id: this.idInicial++,
-  //         nombre: persona.nombre,
-  //         edad: persona.edad,
-  //         sexo: persona.sexo
-  //       });       
-  //   },
-  //   borrarPersona(id) {
-  //       this.personas = this.personas.filter(persona => persona.id !== id);
-  //   },
-  //   filtrarPersonas(criteria){
-  //     this.criteria = criteria
-  //   }
-  // }
 }
 </script>
 

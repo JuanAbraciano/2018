@@ -1,15 +1,17 @@
 <template>
     <div id="lista">       
-        <!-- <section style="margin-bottom:20px">
+        <section style="margin-bottom:20px">
             <input type="radio" v-model="filtro" value="todos"> Ver todos
             <input type="radio" v-model="filtro" value="f"> Ver mujeres
             <input type="radio" v-model="filtro" value="m"> Ver hombres		
         </section>
         
-        <section>
+        <section v-if="loading">Loading...</section>
+
+        <section v-else>
             <p v-if="personas.length">Se muestran {{personasFiltradas.length}} personas (de un total de {{personas.length}})</p>
             <card-persona v-for="p in personasFiltradas" :persona="p" :key="p.id" @borrarPersona="borrarPersona"></card-persona>
-        </section> -->
+        </section>
     </div>
 </template>
 
@@ -24,8 +26,22 @@ export default {
     },
     data(){
         return{
-            filtro: 'todos'
+            personas: [],
+            filtro: 'todos',
+            loading: false
         }
+    },
+    created(){
+        this.loading = true;
+        PersonService.traerTodos()
+            .then((personas) => {
+                this.loading = false;
+                this.personas = personas;
+            })
+            .catch((mensajeError) => {
+                this.loading = false;
+                alert(mensajeError);
+            })
     },
     computed: {
         personasFiltradas() {
@@ -33,9 +49,6 @@ export default {
                 return this.personas;
             else
                 return this.personas.filter(persona => persona.sexo == this.filtro);
-        },
-        totalPersonas(){
-
         }
     },
     methods: {
