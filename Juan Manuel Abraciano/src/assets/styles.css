@@ -1,0 +1,39 @@
+#app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
+}
+
+#nav a {
+font-weight: bold;
+color: black;
+}
+#nav a:hover{
+color: green;
+}
+
+.control-link{
+color:blue;
+font-weight: bold;
+text-decoration:none;
+}
+.control-link:hover{
+color:lightseagreen;
+text-decoration:none;
+cursor: pointer;
+}
+.control-link:visited{
+color:blue;
+text-decoration:none;
+}
+.control-link:visited:hover{
+color:lightseagreen;
+text-decoration:none;
+}
+
+.description-link{
+font-style: italic;
+}

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <div id="nav" style="margin-bottom:25px">
       <router-link to="/">Home</router-link> |
       <router-link to="/lista">Personas</router-link> |
       <router-link :to="{ name: 'formPersona', params: { id: -1 }}">Crear persona</router-link>
@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import '@/assets/styles.css'
 export default {
   name: 'app',
   data(){
@@ -17,15 +18,3 @@ export default {
   }
 }
 </script>
-
-<style>
-  #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-
-  }
-</style>

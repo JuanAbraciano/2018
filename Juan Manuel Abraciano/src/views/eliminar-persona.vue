@@ -2,18 +2,18 @@
     <section>
         <section v-if="loading">Loading...</section>
         <section v-else>
-            <div v-if="persona">
+            <div v-if="persona && !paramsMensajeEstado.active">
                 <header>¿Está seguro de eliminar a esta persona?</header>
-                <p>{{persona.nombre}}, {{persona.sexo == "f" ? "Mujer" : "Hombre"}}. {{persona.edad}} años.</p>
+                <p style="font-weight:bold">{{persona.nombre}}, {{persona.sexo == "f" ? "Mujer" : "Hombre"}}. {{persona.edad}} años.</p>
                 <div>
-                    <a @click="eliminar" style="margin-right:20px">Sí</a>
-                    <a @click="volver">Cancelar</a>
+                    <a @click="eliminar" style="margin-right:20px" class="control-link">Sí</a>
+                    <a @click="volver" class="control-link">Cancelar</a>
                 </div>
             </div>
 
             <!-- Se muestra cuando la persona ya fue eliminada -->
             <div v-else>
-                <a @click="volver">Volver</a>
+                <mensaje-estado v-if="paramsMensajeEstado.active" :paramsMensajeEstado="paramsMensajeEstado"></mensaje-estado>
             </div>
         </section>
     </section>
@@ -21,10 +21,13 @@
 
 <script>
 import PersonService from '@/services/personService'
-import Router from 'vue-router'
+import mensajeEstado from '@/components/mensaje-estado.vue'
 
 export default {
     name: 'eliminarPersona',
+    components:{
+        mensajeEstado
+    },
     data(){
         return{
             persona: {
@@ -33,7 +36,14 @@ export default {
                 sexo: "f",
                 id: -1
             },
-            loading: false
+            loading: false,
+            paramsMensajeEstado:{
+                active: false,
+                estado: "",
+                msj: "",
+                backTo: ""
+            } 
+            
         }
     },
     created(){
@@ -44,7 +54,11 @@ export default {
                 this.loading = false;
             })
             .catch((mensajeError) => {
-                alert(mensajeError);
+                this.paramsMensajeEstado.active = true;
+                this.paramsMensajeEstado.estado = "error";
+                this.paramsMensajeEstado.msj = mensajeError;
+                this.paramsMensajeEstado.backTo = "lista";
+
                 this.loading = false;
             });
     },
@@ -54,11 +68,19 @@ export default {
             PersonService.eliminarPersona(this.persona.id)
                 .then((mensajeOk) => {
                     this.persona = null;
-                    alert(mensajeOk);
+
+                    this.paramsMensajeEstado.active = true;
+                    this.paramsMensajeEstado.estado = "ok";
+                    this.paramsMensajeEstado.msj = mensajeOk;
+                    this.paramsMensajeEstado.backTo = "lista";
                     this.loading = false;
                 })
                 .catch((mensajeError) => {
-                    alert(mensajeError);
+                    this.paramsMensajeEstado.active = true;
+                    this.paramsMensajeEstado.estado = "error";
+                    this.paramsMensajeEstado.msj = mensajeError;
+                    this.paramsMensajeEstado.backTo = "lista";
+                                
                     this.loading = false;
                 })
         },

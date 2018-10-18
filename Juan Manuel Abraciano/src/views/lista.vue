@@ -1,6 +1,6 @@
 <template>
     <div id="lista">       
-        <section style="margin-bottom:20px">
+        <section style="margin-bottom:15px">
             <input type="radio" v-model="filtro" value="todos"> Ver todos
             <input type="radio" v-model="filtro" value="f"> Ver mujeres
             <input type="radio" v-model="filtro" value="m"> Ver hombres		
@@ -9,7 +9,7 @@
         <section v-if="loading">Loading...</section>
 
         <section v-else>
-            <p v-if="personas.length">Se muestran {{personasFiltradas.length}} personas (de un total de {{personas.length}})</p>
+            <p v-if="personas.length" class="description-link">Se muestran {{personasFiltradas.length}} personas (de un total de {{personas.length}})</p>
             <card-persona v-for="p in personasFiltradas" :persona="p" :key="p.id" @borrarPersona="borrarPersona"></card-persona>
         </section>
     </div>
