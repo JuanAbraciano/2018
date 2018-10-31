@@ -35,13 +35,9 @@
 
 <script>
 import PersonService from '@/services/personService'
-import cardPersona from '@/components/card-persona.vue'
 
 export default {
     name: 'lista',
-    components:{
-        cardPersona
-    },
     data(){
         return{
             personas: [],
