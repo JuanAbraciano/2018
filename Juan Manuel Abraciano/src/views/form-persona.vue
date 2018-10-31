@@ -1,27 +1,35 @@
 <template>
-	<section style="display:inline-block; margin-bottom:20px;">
+	<section style="display:inline-block; margin-bottom:20px; width: 500px">
 		<section v-if="loading">Loading...</section>
 
 		<section v-else style="text-align:left; margin-bottom:10px;">
-			<mensaje-estado v-if="paramsMensajeEstado.active" :paramsMensajeEstado="paramsMensajeEstado"></mensaje-estado>
+			<el-alert title="La persona fue guardada con éxito!" type="success" show-icon v-if="mensajeEstado == 'ok'"></el-alert>
+			<el-alert title="La persona no pudo ser guardada" type="error" :description="mensajeError" show-icon v-if="mensajeEstado == 'error'"></el-alert>
+			
+			<el-form v-if="mensajeEstado === ''" :model="persona" :rules="rules" ref="persona" label-width="150px" class="demo-ruleForm">
+				<el-form-item label="Nombre" prop="nombre">
+					<el-input v-model="persona.nombre"></el-input>
+				</el-form-item>
 
-			<div v-else>
-				<p class="description-link">Ingrese los datos de la persona a {{modoEdicion ? "editar" : "crear"}}</p>
+				<el-form-item label="Edad" prop="edad">
+					<el-input type="number" v-model="persona.edad"></el-input>
+				</el-form-item>
 
-				<div >
-					<input class="input-textbox" type="text" v-model="persona.nombre" @change="validarNombre" placeholder="Nombre">
-					<p class="lbl-error" v-if="errores.errorNombre">{{errores.errorNombre}}</p>
-				</div>
-				<div >
-					<input class="input-textbox" type="number" min="0" max="100" v-model="persona.edad"  @change="validarEdad"  placeholder="Edad">
-					<p class="lbl-error" v-if="errores.errorEdad">{{errores.errorEdad}}</p>
-				</div>
-				<div>
-					<input type="radio" v-model="persona.sexo" value="f">Mujer
-					<input type="radio" v-model="persona.sexo" value="m">Hombre
-				</div>
-				
-				<a @click="submitPersona()" class="control-link" style="display:inline-block; margin-top:20px">Guardar</a>
+				<el-form-item label="Sexo" prop="sexo">
+					 <el-radio-group v-model="persona.sexo">
+						<el-radio label="f">Mujer</el-radio>
+						<el-radio label="m">Varón</el-radio>
+					 </el-radio-group>
+				</el-form-item>
+
+				<el-form-item>
+					<el-button type="primary" @click="submitPersona('persona')" style="float:right">Guardar</el-button>
+				</el-form-item>
+			</el-form>
+
+			<div v-else style="margin-top: 20px; text-align: center;">
+				<el-button type="primary" @click="volver()">Volver</el-button>
+				<el-button v-if="!modoEdicion" type="primary" @click="mensajeEstado=''">Crear otra persona</el-button>
 			</div>
 		</section>
 	</section>
@@ -29,14 +37,20 @@
 
 <script>
 	import PersonService from '@/services/personService'
-	import mensajeEstado from '@/components/mensaje-estado.vue'
 
 	export default {
 		name: 'formPersona',
-		components:{
-			mensajeEstado
-		},
 	    data() {
+			var validarEdad = (rule, value, callback) => {
+				if (!value) {
+					return callback(new Error('Debe llenar este campo'));
+				}
+				if (value <= 0 || value > 200) {
+					callback(new Error('Debe ingresar una edad valida'));
+				} else {
+					callback();
+				}
+			};
 	        return {
 	            persona: {
 					nombre: "",
@@ -44,18 +58,18 @@
 					sexo: "f",
 					id: -1
 				},
+				rules:{
+					nombre:[
+						{ required: true, message: 'Debe llenar este campo', trigger: 'blur' },
+					],
+					edad:[
+						{ required: true, validator: validarEdad, trigger: 'blur' }					
+					]
+				},
 				modoEdicion: false, 
 				loading: false,
-		      	errores:{
-		      		errorNombre: "",
-		      		errorEdad: ""
-				},
-				paramsMensajeEstado:{
-					active: false,
-					estado: "",
-					msj: "",
-					backTo: ""
-				}  
+				mensajeEstado: "",
+				mensajeError: ""
 	        }
 		},
 		created() {
@@ -69,86 +83,56 @@
 						this.loading = false;
 					})
 					.catch((mensajeError) => {
-						this.paramsMensajeEstado.active = true;
-						this.paramsMensajeEstado.estado = "error";
-						this.paramsMensajeEstado.msj = mensajeError;
-						this.paramsMensajeEstado.backTo = "lista";
+						// this.paramsMensajeEstado.active = true;
+						// this.paramsMensajeEstado.estado = "error";
+						// this.paramsMensajeEstado.msj = mensajeError;
+						// this.paramsMensajeEstado.backTo = "lista";
 
 						this.loading = false;
 					});
 			}
 		},
 	    methods: {
-	        submitPersona() {
-				this.validarNombre(this.persona.nombre);
-				this.validarEdad(this.persona.edad);
-				if(!this.errores.errorNombre && !this.errores.errorEdad) 
-				{
-					this.loading = true;
-					if(!this.modoEdicion){
-						PersonService.crearPersona(this.persona.nombre, this.persona.edad, this.persona.sexo)
-							.then((mensajeOk) => {
-								this.paramsMensajeEstado.active = true;
-								this.paramsMensajeEstado.estado = "ok";
-								this.paramsMensajeEstado.msj = mensajeOk;
-								this.paramsMensajeEstado.backTo = "lista";
+			submitPersona(formName){
+				this.$refs[formName].validate((valid) => {
+					if (valid) {
+						this.loading = true;
+						if(!this.modoEdicion){
+							PersonService.crearPersona(this.persona.nombre, this.persona.edad, this.persona.sexo)
+								.then((mensajeOk) => {
+									this.mensajeEstado = "ok";
 
-								this.loading = false;
-								this.persona.nombre = "";
-								this.persona.edad = "";	
-							})
-							.catch((mensajeError) => {
-								this.paramsMensajeEstado.active = true;
-								this.paramsMensajeEstado.estado = "error";
-								this.paramsMensajeEstado.msj = mensajeError;
-								this.paramsMensajeEstado.backTo = "lista";
+									this.loading = false;
+									this.persona.nombre = "";
+									this.persona.edad = "";	
+									this.persona.sexo = "f";
+								})
+								.catch((mensajeError) => {
+									this.mensajeEstado = "error";
+									this.mensajeError = mensajeError;
 
-								this.loading = false;
-							});					
-					} else{
-						PersonService.modificarPersona(this.persona.nombre, this.persona.edad, this.persona.sexo, this.persona.id)
-							.then((mensajeOk) => {
-								this.paramsMensajeEstado.active = true;
-								this.paramsMensajeEstado.estado = "ok";
-								this.paramsMensajeEstado.msj = mensajeOk;
-								this.paramsMensajeEstado.backTo = "lista";
+									this.loading = false;
+								});					
+						} else{
+							PersonService.modificarPersona(this.persona.nombre, this.persona.edad, this.persona.sexo, this.persona.id)
+								.then((mensajeOk) => {
+									this.mensajeEstado = "ok";
 
-								this.loading = false;							
-							})
-							.catch((mensajeError) => {
-								this.paramsMensajeEstado.active = true;
-								this.paramsMensajeEstado.estado = "error";
-								this.paramsMensajeEstado.msj = mensajeError;
-								this.paramsMensajeEstado.backTo = "lista";
-								
-								this.loading = false;
-							});	
-					}
-				} 				
+									this.loading = false;							
+								})
+								.catch((mensajeError) => {
+									this.mensajeEstado = "error";
+									this.mensajeError = mensajeError;
+									
+									this.loading = false;
+								});	
+						}
+					} 
+				});
 			},
-			validarNombre(){
-				if(this.persona.nombre == undefined || this.persona.nombre.length == 0)
-					this.errores["errorNombre"] = "Debe llenar este campo"
-				else
-					this.errores["errorNombre"] = ""
-			},
-			validarEdad(){
-				if(this.persona.edad == null || this.persona.edad == 0)
-					this.errores["errorEdad"] = "Debe llenar este campo"
-				else if(this.persona.edad < 0 || this.persona.edad > 200)
-					this.errores["errorEdad"] = "Debe ingresar una edad valida"
-				else
-					this.errores["errorEdad"] = ""
-			}
+			volver(){
+            	this.$router.push({ name: "lista"});
+        	}
 	    }
 	}
 </script>
-
-<style>
-	.lbl-error{
-		display:inline;
-		color:red;
-		font-size:12px;
-	}
-</style>
-

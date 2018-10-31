@@ -64,9 +64,9 @@ export default {
           persona.edad = edad;
           persona.sexo = sexo;
           guardarStorage("people", personas);
-          res("Persona modificada correctamente");          
+          res("ok");          
         } catch(e){
-          rej("La persona no pudo ser modificada (" + e.toString() + ")");
+          rej(e.toString());
         }
       }, 1500);
     });

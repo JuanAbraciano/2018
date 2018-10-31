@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="nav" style="margin-bottom:25px">
+    <div id="nav" style="margin-bottom:25px; margin-top: 60px;">
       <router-link to="/">Home</router-link> |
       <router-link to="/lista">Personas</router-link> |
       <router-link :to="{ name: 'formPersona', params: { id: -1 }}">Crear persona</router-link>

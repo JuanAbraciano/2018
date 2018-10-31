@@ -1,11 +1,38 @@
+/*Begin TEMPLATES*/
 #app {
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    vertical-align: middle;
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    margin-top: 60px;
 }
+.el-card{
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 600px;
+}
+/*End TEMPLATES*/
+
+/*Begin CARDS*/
+.el-card h2{
+    margin: 0px 10px 0px 0px;
+    display: inline;
+}
+.el-card__body{
+    padding: 5px !important;
+    height: 28px;
+}
+.el-card button{
+    padding: 6px 20px;
+}
+/*End CARDS*/
+
 
 #nav a {
 font-weight: bold;
@@ -15,6 +42,7 @@ color: black;
 color: green;
 }
 
+/*Begin CONTROLS*/
 .control-link{
 color:blue;
 font-weight: bold;
@@ -37,3 +65,4 @@ text-decoration:none;
 .description-link{
 font-style: italic;
 }
+/*End CONTROLS*/

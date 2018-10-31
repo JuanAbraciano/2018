@@ -1,16 +1,34 @@
 <template>
     <div id="lista">       
         <section style="margin-bottom:15px">
-            <input type="radio" v-model="filtro" value="todos"> Ver todos
-            <input type="radio" v-model="filtro" value="f"> Ver mujeres
-            <input type="radio" v-model="filtro" value="m"> Ver hombres		
+            <el-radio-group v-model="filtro">
+                <el-radio label="todos">Ver todos</el-radio>
+                <el-radio label="f">Ver mujeres</el-radio>
+                <el-radio label="m">Ver varones</el-radio>
+            </el-radio-group>
         </section>
         
         <section v-if="loading">Loading...</section>
 
         <section v-else>
             <p v-if="personas.length" class="description-link">Se muestran {{personasFiltradas.length}} personas (de un total de {{personas.length}})</p>
-            <card-persona v-for="p in personasFiltradas" :persona="p" :key="p.id" @borrarPersona="borrarPersona"></card-persona>
+            
+            <el-card v-for="p in personasFiltradas" :persona="p" :key="p.id" class="box-card">
+                <div>
+                    <div style=" float:left">
+                        <h2>{{p.nombre}}</h2>
+                        <span><i>{{p.edad}} años, {{p.sexo == 'f' ? 'Mujer' : 'Varón'}}</i></span>
+                    </div>
+                    <div style="display:inline-block; float:right">
+                        <router-link :to="{ name: 'formPersona', params: { id: p.id }}" class="control-link" style="margin-right:15px"> 
+                            <el-button type="primary">Editar</el-button>
+                        </router-link>
+                        <router-link :to="{ name: 'eliminarPersona', params: { id: p.id }}" class="control-link">
+                            <el-button type="danger">Eliminar</el-button>
+                        </router-link>
+                    </div>
+                </div>
+            </el-card>
         </section>
     </div>
 </template>
