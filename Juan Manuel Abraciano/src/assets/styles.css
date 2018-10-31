@@ -17,6 +17,10 @@
     margin-right: auto;
     width: 600px;
 }
+.margen{
+    background-color:#409EFF; 
+    height:100vh
+}
 /*End TEMPLATES*/
 
 /*Begin CARDS*/
@@ -33,13 +37,21 @@
 }
 /*End CARDS*/
 
-
-#nav a {
-font-weight: bold;
-color: black;
+.el-menu-item {
+    border-bottom:1px solid grey;
+    margin:0px 20px 0px 20px;
 }
-#nav a:hover{
-color: green;
+.menu-item{
+    text-decoration: none;
+    font-weight: bold;
+    font-size:20px;
+    color:black;
+}
+.menu-item:hover{
+    color:rgb(28, 166, 247);
+}
+a {
+    text-decoration: none;
 }
 
 .el-form-item__label{

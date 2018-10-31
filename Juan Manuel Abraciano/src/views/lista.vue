@@ -1,6 +1,6 @@
 <template>
     <div id="lista">       
-        <section style="margin-bottom:15px">
+        <section style="margin-bottom:15px; vertical-align: middle;">
             <el-radio-group v-model="filtro">
                 <el-radio label="todos">Ver todos</el-radio>
                 <el-radio label="f">Ver mujeres</el-radio>
