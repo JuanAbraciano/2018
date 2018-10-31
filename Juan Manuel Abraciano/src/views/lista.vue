@@ -12,7 +12,7 @@
 
         <section v-else>
             <p v-if="personas.length" class="description-link">Se muestran {{personasFiltradas.length}} personas (de un total de {{personas.length}})</p>
-            
+            <p v-else>No hay personas cargadas</p>
             <el-card v-for="p in personasFiltradas" :persona="p" :key="p.id" class="box-card">
                 <div>
                     <div style=" float:left">

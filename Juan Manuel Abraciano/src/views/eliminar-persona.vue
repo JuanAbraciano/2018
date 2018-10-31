@@ -1,19 +1,20 @@
 <template>
-    <section>
+    <section style="display:inline-block; margin-bottom:20px; width: 300px">
         <section v-if="loading">Loading...</section>
         <section v-else>
-            <div v-if="persona && !paramsMensajeEstado.active">
+            <div v-if="persona && persona.id > 0 && !mensajeEstado">
                 <header>¿Está seguro de eliminar a esta persona?</header>
                 <p style="font-weight:bold">{{persona.nombre}}, {{persona.sexo == "f" ? "Mujer" : "Hombre"}}. {{persona.edad}} años.</p>
                 <div>
-                    <a @click="eliminar" style="margin-right:20px" class="control-link">Sí</a>
-                    <a @click="volver" class="control-link">Cancelar</a>
+                    <el-button type="success" @click="eliminar" style="text-align:center">Sí</el-button>
+                    <el-button type="danger" @click="volver" style="text-align:center">Cancelar</el-button>
                 </div>
             </div>
-
-            <!-- Se muestra cuando la persona ya fue eliminada -->
-            <div v-else>
-                <mensaje-estado v-if="paramsMensajeEstado.active" :paramsMensajeEstado="paramsMensajeEstado"></mensaje-estado>
+            <div v-if="mensajeEstado">
+                <el-alert title="La persona no pudo ser eliminada" type="error" :description="mensajeError" show-icon v-if="mensajeEstado == 'errorEliminando'"></el-alert>
+                <el-alert title="Error al encontrar la persona!" type="error" :description="mensajeError" show-icon v-if="mensajeEstado == 'errorTrayendoPersona'"></el-alert>
+                <el-alert title="La persona fue eliminada con éxito!" type="success" show-icon  v-if="mensajeEstado == 'ok'"></el-alert>            
+                <el-button type="primary" @click="volver()" style="margin-top: 20px;">Volver</el-button>
             </div>
         </section>
     </section>
@@ -21,13 +22,9 @@
 
 <script>
 import PersonService from '@/services/personService'
-import mensajeEstado from '@/components/mensaje-estado.vue'
 
 export default {
     name: 'eliminarPersona',
-    components:{
-        mensajeEstado
-    },
     data(){
         return{
             persona: {
@@ -37,13 +34,8 @@ export default {
                 id: -1
             },
             loading: false,
-            paramsMensajeEstado:{
-                active: false,
-                estado: "",
-                msj: "",
-                backTo: ""
-            } 
-            
+            mensajeEstado: "",
+		    mensajeError: ""            
         }
     },
     created(){
@@ -54,10 +46,8 @@ export default {
                 this.loading = false;
             })
             .catch((mensajeError) => {
-                this.paramsMensajeEstado.active = true;
-                this.paramsMensajeEstado.estado = "error";
-                this.paramsMensajeEstado.msj = mensajeError;
-                this.paramsMensajeEstado.backTo = "lista";
+                this.mensajeEstado = "errorTrayendoPersona";
+                this.mensajeError = mensajeError;
 
                 this.loading = false;
             });
@@ -68,18 +58,13 @@ export default {
             PersonService.eliminarPersona(this.persona.id)
                 .then((mensajeOk) => {
                     this.persona = null;
+                    this.mensajeEstado = "ok";
 
-                    this.paramsMensajeEstado.active = true;
-                    this.paramsMensajeEstado.estado = "ok";
-                    this.paramsMensajeEstado.msj = mensajeOk;
-                    this.paramsMensajeEstado.backTo = "lista";
                     this.loading = false;
                 })
                 .catch((mensajeError) => {
-                    this.paramsMensajeEstado.active = true;
-                    this.paramsMensajeEstado.estado = "error";
-                    this.paramsMensajeEstado.msj = mensajeError;
-                    this.paramsMensajeEstado.backTo = "lista";
+                    this.mensajeEstado = "errorEliminando";
+                    this.mensajeError = mensajeError;
                                 
                     this.loading = false;
                 })

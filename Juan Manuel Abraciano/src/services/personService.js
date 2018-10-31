@@ -48,7 +48,7 @@ export default {
           guardarStorage("people", personas);
           res("Persona creada correctamente");          
         } catch(e){
-          rej("La persona no pudo ser creada (" + e.toString() + ")");
+          rej(e.toString());
         }
       }, 1500);
     });
@@ -81,7 +81,7 @@ export default {
           guardarStorage("people", personas);
           res("Persona eliminada correctamente"); 
         } catch(e){
-          rej("La persona no pudo ser eliminada (" + e.toString() + ")");
+          rej(e.toString());
         }
       }, 1000);
     });

@@ -5,7 +5,8 @@
 		<section v-else style="text-align:left; margin-bottom:10px;">
 			<el-alert title="La persona fue guardada con éxito!" type="success" show-icon v-if="mensajeEstado == 'ok'"></el-alert>
 			<el-alert title="La persona no pudo ser guardada" type="error" :description="mensajeError" show-icon v-if="mensajeEstado == 'error'"></el-alert>
-			
+			<el-alert title="Error al encontrar la persona!" type="error" :description="mensajeError" show-icon v-if="mensajeEstado == 'errorTrayendoPersona'"></el-alert>
+
 			<el-form v-if="mensajeEstado === ''" :model="persona" :rules="rules" ref="persona" label-width="150px" class="demo-ruleForm">
 				<el-form-item label="Nombre" prop="nombre">
 					<el-input v-model="persona.nombre"></el-input>
@@ -83,10 +84,8 @@
 						this.loading = false;
 					})
 					.catch((mensajeError) => {
-						// this.paramsMensajeEstado.active = true;
-						// this.paramsMensajeEstado.estado = "error";
-						// this.paramsMensajeEstado.msj = mensajeError;
-						// this.paramsMensajeEstado.backTo = "lista";
+						this.mensajeEstado = "errorTrayendoPersona";
+						this.mensajeError = mensajeError;
 
 						this.loading = false;
 					});
@@ -110,6 +109,9 @@
 								.catch((mensajeError) => {
 									this.mensajeEstado = "error";
 									this.mensajeError = mensajeError;
+									this.persona.nombre = "";
+									this.persona.edad = "";	
+									this.persona.sexo = "f";
 
 									this.loading = false;
 								});					

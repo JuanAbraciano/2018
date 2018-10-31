@@ -42,6 +42,10 @@ color: black;
 color: green;
 }
 
+.el-form-item__label{
+    font-weight: bold;
+}
+
 /*Begin CONTROLS*/
 .control-link{
 color:blue;
