@@ -1,11 +1,12 @@
 <template>
   <div id="app">
     <top-menu></top-menu>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import topMenu from './components/top-menu.vue'
+import topMenu from '@/components/top-menu.vue'
 import apiService from '@/services/APIService'
 
 export default {

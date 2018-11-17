@@ -1,28 +1,39 @@
 <template>
     <div id="home">
         <span>Partidos de hoy</span>
+        <matches-container v-for="c in getCompetitions" :id="c" :matches="matches" :key="c">{{c}}</matches-container>
     </div>
 </template>
 
-<script>
+<script>    
+import matchesContainer from '@/components/matches-container'
 import apiService from '@/services/APIService'
 export default {
     name: 'home',
+    components: {
+        matchesContainer
+    },
     data(){
         return{
-            list:[],
-            date: null
+            matches:[],
         }
     },
-    created(){
-        // apiService.getMatchesByDay()
-        // .then((comp) => {
-        //     this.list = comp;
-        // })
-        // .catch((err) => {
-        //     alert(err);
-        // });
-        this.date = new Date();
+    computed: {
+        getCompetitions(){
+            return  [...new Set(this.matches.map(match => match.competition.id))]
+        }
+    },
+    mounted(){
+        //Traigo los partidos de hoy
+        let date = new Date();
+        date = date.toISOString().substring(0, 10);
+        apiService.getMatchesByDay(date)
+        .then((comp) => {
+            this.matches = comp;
+        })
+        .catch((err) => {
+            alert(err);
+        });
     }
 }
 </script>

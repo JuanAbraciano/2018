@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import League from './views/League.vue'
 import Cup from './views/Cup.vue'
-import Calendar from './views/calendar.vue'
+import Calendar from './views/Calendar.vue'
 import Login from './views/Login.vue'
 
 Vue.use(Router)

@@ -6,7 +6,7 @@ const axiosInstance = axios.create({
 
 export default{
  
-    /* #region Competitions */
+/* #region Competitions */
 
     //Trae todas las ligas de los paises
     getAllLeagues() {
@@ -24,7 +24,18 @@ export default{
                 const coupsIds = [2018,2001,2000];
                 return response.data.competitions.filter(comp => coupsIds.includes(comp.id));
             })
-    } 
+    },
 
-    /* #endregion Competitions */
+/* #endregion Competitions */
+
+/* #region Matches */
+
+    getMatchesByDay(date){
+        return axiosInstance.get('matches?competitions=2013,2014,2019,2021,2088,2018,2001,2000&dateFrom=2018-11-08&dateTo=' + date)
+        .then((response) => {
+            return response.data.matches;
+        });
+    }
+
+/* #endregion Matches */
 }   

@@ -41,8 +41,6 @@
                 <router-link :to="{ name: 'login'}"><span class="menu-item">Log in</span></router-link>
             </el-menu-item>
         </el-menu>
-
-        <router-view/>
     </div>
 </template>
 
