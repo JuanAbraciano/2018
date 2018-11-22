@@ -7,7 +7,6 @@ const axiosInstance = axios.create({
 export default{
  
 /* #region Competitions */
-
     //Trae todas las ligas de los paises
     getAllLeagues() {
         return axiosInstance.get('competitions?plan=TIER_ONE')
@@ -25,17 +24,40 @@ export default{
                 return response.data.competitions.filter(comp => coupsIds.includes(comp.id));
             })
     },
-
 /* #endregion Competitions */
 
 /* #region Matches */
-
     getMatchesByDay(date){
-        return axiosInstance.get('matches?competitions=2013,2014,2019,2021,2088,2018,2001,2000&dateFrom=2018-11-08&dateTo=' + date)
+        //FIXME
+        return axiosInstance.get('matches?competitions=2013,2014,2019,2021,2088,2018,2001,2000&dateFrom=2018-11-16&dateTo=' + date)
         .then((response) => {
             return response.data.matches;
         });
-    }
+    },
 
+    //Trae los partidos por campeonato y por fecha
+    getMatchesByCompetitionAndMatchday(competitionId, matchday){
+        return axiosInstance.get('competitions/' + competitionId + '/matches?matchday=' + matchday)
+        .then((response) => {
+            return response.data.matches;
+        });
+    },
 /* #endregion Matches */
+
+    //Para un campeonato, trae la fecha que se esta jugando (o la proxima, si es que no estamos en un fin de semana)
+    getMatchDayByCompetitionId(competitionId, today){
+        //FIXME
+        return axiosInstance.get('competitions/' + competitionId + '/matches?dateFrom=' + today + '&dateTo=2018-12-31')
+        .then((response) => {
+            return response.data.matches[0].matchday;
+        });
+    },
+
+    getMatchDaysForCompetition(competitionId){
+        //FIXME
+        return axiosInstance.get('competitions/' + competitionId + '/matches?season=2018')
+        .then((response) => {
+            return  [...new Set(response.data.matches.map(match => match.matchday))]
+        });
+    }
 }   

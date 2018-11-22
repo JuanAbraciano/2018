@@ -15,10 +15,7 @@
                 <el-menu-item index="2-3">
                     <router-link :to="{ name: 'league', params: { id: 2021 }}"><span class="menu-item">Inglaterra</span></router-link>
                 </el-menu-item>
-                <el-menu-item index="2-3">
-                    <router-link :to="{ name: 'league', params: { id: 2088 }}"><span class="menu-item">Alemania</span></router-link>
-                </el-menu-item>
-                <el-menu-item index="2-3">
+                <el-menu-item index="2-4">
                     <router-link :to="{ name: 'league', params: { id: 2019 }}"><span class="menu-item">Italia</span></router-link>
                 </el-menu-item>
             </el-submenu>

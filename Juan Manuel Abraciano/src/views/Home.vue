@@ -8,6 +8,8 @@
 <script>    
 import matchesContainer from '@/components/matches-container'
 import apiService from '@/services/APIService'
+import moment from 'moment'
+
 export default {
     name: 'home',
     components: {
@@ -15,7 +17,7 @@ export default {
     },
     data(){
         return{
-            matches:[],
+            matches:[]
         }
     },
     computed: {
@@ -25,8 +27,8 @@ export default {
     },
     mounted(){
         //Traigo los partidos de hoy
-        let date = new Date();
-        date = date.toISOString().substring(0, 10);
+        const date = moment(new Date()).format("YYYY-MM-DD");
+
         apiService.getMatchesByDay(date)
         .then((comp) => {
             this.matches = comp;
