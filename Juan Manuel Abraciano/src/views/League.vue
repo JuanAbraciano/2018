@@ -1,12 +1,14 @@
 <template>
     <div>
         {{competitionId}} - Fecha {{matchday || '-'}}
-        <matches-container :id="competitionId" :matches="matches" :key="competitionId"></matches-container>
+        <league-matchdays-container :competitionId="competitionId" :matchdays="matchdays" @changeMatchday="changeMatchday"></league-matchdays-container>
+        <league-matches-container :id="competitionId" :matches="matches" :key="competitionId"></league-matches-container>
     </div>
 </template>
 
 <script>
-import matchesContainer from '@/components/matches-container'
+import leagueMatchesContainer from '@/components/leagues/league-matches-container'
+import leagueMatchdaysContainer from '@/components/leagues/league-matchdays-container'
 import apiService from '@/services/APIService'
 import moment from 'moment'
 import utils from '@/assets/utils'
@@ -14,26 +16,37 @@ import utils from '@/assets/utils'
 export default {
     name: 'league',
     components: {
-        matchesContainer
+        leagueMatchesContainer,
+        leagueMatchdaysContainer
     },
     data(){
         return{
             competitionId: 0,
             matchday: 0,
-            matches: [],
-            matchdays: 0
+            matchdays: 0,
+            matches: []
         }
     },
-    computed: {
-
+    methods: {
+        changeMatchday(matchday){
+            if(matchday > 0){
+                apiService.getMatchesByCompetitionAndMatchday(this.competitionId, matchday)
+                .then((matches) => {
+                    this.matchday = matchday;
+                    this.matches = matches;
+                })
+                .catch((err) => {
+                    alert(err);
+                })
+            }
+        }
     },
     created(){
         this.competitionId = this.$route.params.id;
-        this.matchdays = utils.competitionMatchdays.find(comp => comp.id = this.competitionId).matchdays;
-    },
-    mounted(){
+        this.matchdays = utils.leagueMatchdays.find(comp => comp.id = this.competitionId).matchdays;
         const date = moment(new Date()).format("YYYY-MM-DD");
 
+        //Por defecto trae la fecha actual
         apiService.getMatchDayByCompetitionId(this.competitionId, date)
         .then((matchday) => {
             this.matchday = matchday;
@@ -45,6 +58,9 @@ export default {
         .catch((err) => {
             alert(err);
         });
+    },
+    mounted(){
+        
     }
 }
 </script>
