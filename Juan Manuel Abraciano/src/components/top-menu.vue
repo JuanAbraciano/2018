@@ -24,9 +24,6 @@
                 <el-menu-item index="3-1">
                     <router-link :to="{ name: 'cup', params: { id: 2001 }}"><span class="menu-item">Champions League</span></router-link>
                 </el-menu-item>
-                <el-menu-item index="3-2">
-                    <router-link :to="{ name: 'cup', params: { id: 2018 }}"><span class="menu-item">Eurocopa 2016</span></router-link>
-                </el-menu-item>
                 <el-menu-item index="3-3">
                     <router-link :to="{ name: 'cup', params: { id: 2000 }}"><span class="menu-item">Mundial 2018</span></router-link>
                 </el-menu-item>

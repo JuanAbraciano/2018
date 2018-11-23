@@ -7,7 +7,7 @@
 <script>
 import matchCard from '@/components/match-card.vue'
 export default {
-    name: 'matchesContainer',
+    name: 'leagueMatchesContainer',
     components: {
         matchCard
     },

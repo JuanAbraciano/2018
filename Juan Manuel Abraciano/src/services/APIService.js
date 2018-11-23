@@ -1,4 +1,6 @@
 import axios from 'axios';
+import utils from '@/assets/utils'
+
 const axiosInstance = axios.create({
     baseURL: 'https://api.football-data.org/v2/',
     headers: {'X-Auth-Token': 'd739357133e84409a58114e7a7d87fa3' }
@@ -42,8 +44,19 @@ export default{
             return response.data.matches;
         });
     },
+
+    //Trae todos los partidos por campeonato y temporada
+    getMatchesByCompetitionAndSeason(competitionId, season){
+        return axiosInstance.get('competitions/' + competitionId + '/matches?season=' + season)
+        .then((response) => {
+            const stagesToIgnore = utils.stagesToIgnore;
+            const filteredArray = response.data.matches.filter(match => !stagesToIgnore.includes(match.stage));
+            return filteredArray;
+        });
+    },
 /* #endregion Matches */
 
+/* #region Matchdays (Fechas) */
     //Para un campeonato, trae la fecha que se esta jugando (o la proxima, si es que no estamos en un fin de semana)
     getMatchDayByCompetitionId(competitionId, today){
         //FIXME
@@ -59,5 +72,15 @@ export default{
         .then((response) => {
             return  [...new Set(response.data.matches.map(match => match.matchday))]
         });
+    },
+/* #endregion Matchdays (Fechas) */
+
+/* #region Standings */
+    getStandingsByCompetitionAndSeason(competitionId, season){
+        return axiosInstance.get('competitions/' + competitionId + '/standings?standingType=TOTAL&season=' + season)
+        .then((response) => {
+            return response;
+        })
     }
+/* #endregion Standings */
 }   
