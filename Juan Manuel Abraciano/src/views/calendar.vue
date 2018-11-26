@@ -1,6 +1,6 @@
 <template>
   <section>
-    <daily-matches-container v-for="date in days" :key="" :date="date"></daily-matches-container>  
+    <daily-matches-container v-for="date in days" :key="date" :date="date"></daily-matches-container>  
   </section>
 </template>
 
@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     setDates(){
-      for(let i = 0; i < 10; i++) {
+      for(let i = 0; i < 5; i++) {
         this.days.push(moment(this.today).add(i, 'days').format("YYYY-MM-DD"));
       }
     }

@@ -1,18 +1,22 @@
 <template>
     <section>
         {{stage}}
-        <article v-for="group in groups" :key="group[0].homeTeam.id">
-            <match-card v-for="match in group" :match="match" :key="match.id"></match-card>
-        </article>
+        <section v-for="group in groups" :key="group[0].homeTeam.id" class="cup-finals-groups">
+           <cup-finals-match  v-for="match in group"  :match="match" :key="match.id"></cup-finals-match>
+            <!-- <article v-for="match in group" :match="match" :key="match.id" class="cup-finals-match"></article> -->
+        </section>
     </section>
 </template>
 
 <script>
 import matchCard from '@/components/match-card.vue'
+import cupFinalsMatch from '@/components/cups/cup-finals-match'
+
 export default {
     name: 'cupFinalsContainer',
     components: {
-        matchCard
+        matchCard,
+        cupFinalsMatch
     },
     props: ['stage','matches'],
     data(){

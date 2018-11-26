@@ -1,9 +1,21 @@
 <template>
     <section>
         <br>
-        <span>{{ formatedDate }}</span>
-        <competition-matches-container v-for="c in getCompetitions()" :competitionId="c" :displayCompetitionName="getCompetitions().length > 1" :matches="getCompetitionMatches(c)" :key="c"></competition-matches-container>
-        <span v-if="noMatchesToday">Sin partidos</span>
+        <article>
+            <span>{{ formatedDate }}</span>
+        </article>
+        <article v-if="!loading">
+            <el-alert v-for="msg in errorList" :key="msg" title="Error:" type="error">
+                {{msg}}
+            </el-alert>
+
+            <competition-matches-container v-for="c in getCompetitions()" :competitionId="c" :displayCompetitionName="getCompetitions().length > 1" :matches="getCompetitionMatches(c)" :key="c"></competition-matches-container>
+            <span v-if="noMatchesToday">Sin partidos</span>
+        </article>
+        <article v-else style="width:100%;text-align:center">
+            <img src="../assets/images/loading.gif" alt="loading">
+        </article>
+
     </section>
 </template>
 
@@ -20,9 +32,11 @@ export default {
     },
     data() {
         return {
+            loading: false,
             formatedDate: null,
             matches: [],
-            noMatchesToday: false
+            noMatchesToday: false,
+            errorList: []
         }
     },
     methods: {
@@ -38,6 +52,8 @@ export default {
     created(){
         moment.locale('es');
         this.formatedDate = moment(this.date).format('dddd DD [de] MMMM');
+        this.loading = true;
+        this.errorList = [];
 
         apiService.getMatchesByDay(this.date)
         .then((comp) => {
@@ -45,9 +61,11 @@ export default {
                 this.matches = comp;            
             else
                 this.noMatchesToday = true;
+            this.loading = false;
         })
-        .catch((err) => {
-            alert(err);
+        .catch(() => {
+            this.errorList.push("No se pudo obtener la información de los partidos del día.");
+            this.loading = false;
         });
     }
 }

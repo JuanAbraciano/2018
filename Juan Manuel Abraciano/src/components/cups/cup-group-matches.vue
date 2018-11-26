@@ -1,8 +1,8 @@
 <template>
     <section id="cup-group-matches">   
-        <div id="date-description">
+        <article id="date-description">
             <span>{{formatedDate}}</span>
-        </div>
+        </article>
         <el-table
             :data="getFormatedMatches" 
             stripe 

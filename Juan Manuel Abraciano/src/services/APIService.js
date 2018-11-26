@@ -42,7 +42,8 @@ export default{
         return axiosInstance.get('competitions/' + competitionId + '/matches?matchday=' + matchday)
         .then((response) => {
             return response.data.matches;
-        });
+        })
+        .catch((error) => error);
     },
 
     //Trae todos los partidos por campeonato y temporada
@@ -55,6 +56,15 @@ export default{
         });
     },
 /* #endregion Matches */
+
+/* #region Standings */
+    getStandingsByCompetitionAndSeason(competitionId, season){
+        return axiosInstance.get('competitions/' + competitionId + '/standings?standingType=TOTAL&season=' + season)
+        .then((response) => {
+            return response;
+        })
+    },
+/* #endregion Standings */
 
 /* #region Matchdays (Fechas) */
     //Para un campeonato, trae la fecha que se esta jugando (o la proxima, si es que no estamos en un fin de semana)
@@ -72,15 +82,8 @@ export default{
         .then((response) => {
             return  [...new Set(response.data.matches.map(match => match.matchday))]
         });
-    },
+    }
 /* #endregion Matchdays (Fechas) */
 
-/* #region Standings */
-    getStandingsByCompetitionAndSeason(competitionId, season){
-        return axiosInstance.get('competitions/' + competitionId + '/standings?standingType=TOTAL&season=' + season)
-        .then((response) => {
-            return response;
-        })
-    }
-/* #endregion Standings */
+
 }   

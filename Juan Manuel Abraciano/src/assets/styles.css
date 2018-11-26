@@ -3,9 +3,21 @@ body{
     font-family: Arial, Helvetica, sans-serif; 
 }
 #container{
-    background-image: url('./images/cesped-fondo.jpg');
+    background-image: url('./images/estadio-fondo.jpg');
     width:100vw;
-    height:100vh;
+}
+#block{
+    filter: alpha(opacity=60);
+    /* IE */
+    -moz-opacity: 0.6;
+    /* Mozilla */
+    opacity: 0.6;
+    /* CSS3 */
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100vh;
 }
 /* #endregion Template general */
 
@@ -38,3 +50,18 @@ body{
     display:none;
 }
 /* #endregion Competition Matches Container*/
+
+/* #region Cup Finals */
+.cup-final-date-description{
+    color:white;
+    font-weight: bold;
+    background-color:black;
+}
+.cup-finals-groups{
+    margin-bottom: 10px;
+
+}
+.cup-finals-match{
+
+}
+/* #region Cup Finals */

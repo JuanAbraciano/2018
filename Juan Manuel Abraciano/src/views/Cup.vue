@@ -1,8 +1,17 @@
 <template>
-    <div>
-        <cup-finals-container v-for="stage in getFinalStages()" :key="stage" :stage="stage" :matches="getFinalMatches(stage)"></cup-finals-container>
-        <cup-group-container v-for="group in getGroups()" :key="group" :group="group" :matches="getGroupMatches(group)" :standings="getGroupStandings(group)">a</cup-group-container>
-    </div>
+    <section>
+        <article v-if="!loading">
+            <el-alert v-for="msg in errorList" :key="msg" title="Error:" type="error">
+                {{msg}}
+            </el-alert>
+
+            <cup-finals-container v-for="stage in getFinalStages()" :key="stage" :stage="stage" :matches="getFinalMatches(stage)"></cup-finals-container>
+            <cup-group-container v-for="group in getGroups()" :key="group" :group="group" :matches="getGroupMatches(group)" :standings="getGroupStandings(group)">a</cup-group-container>
+        </article>
+        <article v-else style="width:100%;text-align:center">
+            <img src="../assets/images/loading.gif" alt="loading">
+        </article>
+    </section>
 </template>
 
 <script>
@@ -23,7 +32,9 @@ export default {
             competitionId: 0,
             groupMatches: [],
             finalMatches: [],
-            standings: []
+            standings: [],
+            loading: false,
+            errorList: []
         }
     },
     methods:{
@@ -53,23 +64,27 @@ export default {
     created(){
         this.competitionId = this.$route.params.id;
         const season = utils.cupInfo.find(comp => comp.id = this.competitionId).currentSeason;
+        this.loading = true;
+        this.errorList = [];
 
         apiService.getMatchesByCompetitionAndSeason(this.competitionId, 2017)
         .then((response) => {
             //Divido los partidos en dos arreglos para poder trabajar con menos datos despues
             this.groupMatches = response.filter(match => match.stage == "GROUP_STAGE");
             this.finalMatches = response.filter(match => utils.finalStages.includes(match.stage));
+            this.loading = false;
         })
-        .catch((err) => {
-            alert(err);
+        .catch(() => {
+            this.errorList.push("No se pudo obtener la información de los partidos.");
+            this.loading = false;
         });
 
         apiService.getStandingsByCompetitionAndSeason(this.competitionId, 2017)
         .then((response) => {
             this.standings = response.data.standings;
         })
-        .catch((err) => {
-            alert(err);
+        .catch(() => {
+            this.errorList.push("No se pudo obtener la información de las posiciones.");
         });
     }
 }

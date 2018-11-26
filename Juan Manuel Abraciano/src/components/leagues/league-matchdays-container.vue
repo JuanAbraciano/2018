@@ -1,7 +1,11 @@
 <template>
-    <section>   
-        <a href="#" v-for="matchDay in matchdays" :key="matchDay" @click="changeMatchday(matchDay)">{{matchDay}}</a>
-    </section>
+    <div class="block">
+        <el-pagination
+            layout="prev, pager, next"
+            @current-change="handleCurrentChange"
+            :total="matchdays * 10">
+        </el-pagination>
+    </div>
 </template>
 
 <script>
@@ -9,8 +13,8 @@ export default {
     name: 'leagueMatchdaysContainer',
     props: ['competitionId','matchdays'],
     methods:{
-        changeMatchday(matchDay){
-            this.$emit('changeMatchday', matchDay);
+        handleCurrentChange(val) {
+            this.$emit('changeMatchday', val)
         }
     }
 }
