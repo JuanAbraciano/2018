@@ -1,13 +1,21 @@
 <template>
   <div id="app">
     <top-menu></top-menu>
-    <router-view :key="$route.fullPath"/>
+    <el-container id="container">
+      <el-aside width="20%" ></el-aside>
+      <el-main style="background-color:white; margin-top:5px;">
+        <router-view :key="$route.fullPath"/>
+      </el-main>
+      <el-aside width="20%" ></el-aside>
+    </el-container>
   </div>
 </template>
 
 <script>
 import topMenu from '@/components/top-menu.vue'
 import apiService from '@/services/APIService'
+import '@/assets/styles.css'
+import '../theme/index.css'
 
 export default {
   name: 'app',
@@ -17,23 +25,6 @@ export default {
   data(){
     return{
     }
-  },
-  created() {
-    // apiService.getAllLeagues()
-    //     .then((comp) => {
-    //         this.list = comp;
-    //     })
-    //     .catch((err) => {
-    //         alert(err);
-    //     }); 
-
-    //     apiService.getAllCups()
-    //     .then((comp) => {
-    //         this.list2 = comp;
-    //     })
-    //     .catch((err) => {
-    //         alert(err);
-    //     })
   }
 }
 </script>

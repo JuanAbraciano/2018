@@ -5,15 +5,16 @@ import League from './views/League.vue'
 import Cup from './views/Cup.vue'
 import Calendar from './views/Calendar.vue'
 import Login from './views/Login.vue'
+import store from './store'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
+      path: '/home',
       name: 'home',
       component: Home
     },
@@ -33,9 +34,25 @@ export default new Router({
       component: Calendar
     },
     {
-      path: '/login',
+      path: '/',
       name: 'login',
       component: Login
     }
   ]
 })
+router.beforeEach((to, from, next) => {
+  if(to.name !== "login"){
+    if(!store.state.token){
+      next("/");
+    } else{
+      next();
+    }
+  } else {
+      if(store.state.token){
+        next("/home");
+      } else {
+        next();
+      }
+  }
+})
+export default router

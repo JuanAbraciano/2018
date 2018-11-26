@@ -1,6 +1,6 @@
 <template>
     <section>
-        {{match.homeTeam.name}} | {{match.score.fullTime.homeTeam}} ||| {{match.score.fullTime.awayTeam}} | {{match.awayTeam.name}} --- {{match.utcDate}}
+        {{match.homeTeam.name}} - {{match.score.fullTime.homeTeam}} --- {{match.score.fullTime.awayTeam}} - {{match.awayTeam.name}} --- {{match.utcDate | moment("subtract", "3 hours")}}
     </section>
 </template>
 

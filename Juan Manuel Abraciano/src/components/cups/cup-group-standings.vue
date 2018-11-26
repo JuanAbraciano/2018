@@ -1,24 +1,60 @@
 <template>
     <section>
-        <table>
-            <tr>
-                <th v-for="column in columns" :key="column">
-                    <td>{{column}}</td>
-                </th>
-            </tr>
-            <tr v-for="entry in standings" :key="entry.team.id">
-                <td>{{entry.position}}</td>
-                <td>{{entry.team.name}}</td>
-                <td>{{entry.points}}</td>
-                <td>{{entry.playedGames}}</td>
-                <td>{{entry.won}}</td>
-                <td>{{entry.draw}}</td>
-                <td>{{entry.lost}}</td>
-                <td>{{entry.goalsFor}}</td>
-                <td>{{entry.goalsAgainst}}</td>
-                <td>{{entry.goalDifference}}</td>
-            </tr>
-        </table>
+        <el-table
+            :data="standings"
+            :row-class-name="tableRowClassName"
+            border
+            style="width: 100%">
+            <el-table-column
+                prop="position"
+                label="#"
+                width="45">
+            </el-table-column>
+            <el-table-column
+                prop="team.name"
+                label="Equipo">
+            </el-table-column>
+            <el-table-column
+                prop="points"
+                label="Pts"
+                width="45">
+            </el-table-column>
+            <el-table-column
+                prop="playedGames"
+                label="PJ"
+                width="45">
+            </el-table-column>
+            <el-table-column
+                prop="won"
+                label="PG"
+                width="45">
+            </el-table-column>
+            <el-table-column
+                prop="draw"
+                label="PE"
+                width="45">
+            </el-table-column>
+            <el-table-column
+                prop="lost"
+                label="PP"
+                width="45">
+            </el-table-column>
+            <el-table-column
+                prop="goalsFor"
+                label="GF"
+                width="45">
+            </el-table-column>
+            <el-table-column
+                prop="goalsAgainst"
+                label="GC"
+                width="45">
+            </el-table-column>
+            <el-table-column
+                prop="goalDifference"
+                label="DIF"
+                width="45">
+            </el-table-column>
+        </el-table>
     </section>
 </template>
 
@@ -26,11 +62,19 @@
 export default {
     name: 'cupGroupStandings',
     props: ['standings'],
-    data(){
-        return{
-            columns: ['#','Equipo','Pts','PJ','PG','PE','PP','GF','GC','DIF']
-        }
-    }
+    methods: {
+      tableRowClassName({row, rowIndex}) {
+        if (rowIndex === 0 || rowIndex === 1) 
+          return 'row-success';
+      }
+    },
 }
 </script>
+
+<style>
+    .el-table .row-success{
+        background: #AAF597;
+    }
+</style>
+
 

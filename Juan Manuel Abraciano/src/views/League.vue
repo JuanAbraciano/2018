@@ -1,13 +1,13 @@
 <template>
     <div>
-        {{competitionId}} - Fecha {{matchday || '-'}}
+        <span>{{competitionId}} - Fecha {{matchday || '-'}}</span>
         <league-matchdays-container :competitionId="competitionId" :matchdays="matchdays" @changeMatchday="changeMatchday"></league-matchdays-container>
-        <league-matches-container :id="competitionId" :matches="matches" :key="competitionId"></league-matches-container>
+        <competition-matches-container :competitionId="competitionId" :matches="matches"></competition-matches-container>
     </div>
 </template>
 
 <script>
-import leagueMatchesContainer from '@/components/leagues/league-matches-container'
+import competitionMatchesContainer from '@/components/competition-matches-container'
 import leagueMatchdaysContainer from '@/components/leagues/league-matchdays-container'
 import apiService from '@/services/APIService'
 import moment from 'moment'
@@ -16,7 +16,7 @@ import utils from '@/assets/utils'
 export default {
     name: 'league',
     components: {
-        leagueMatchesContainer,
+        competitionMatchesContainer,
         leagueMatchdaysContainer
     },
     data(){

@@ -1,4 +1,16 @@
 export default{
+    token: 'd739357133e84409a58114e7a7d87fa3',
+    users: [{name: 'Juan', pass: '123'}, {name: 'Pepe', pass: '123'}, {name: 'Maria', pass: '123'}, { name: 'Laura', pass: '123'}, {name: 'Cacho', pass: '123'}],
+    competitionNames: [
+        {id: 2000, name: 'Rusia 2018'}, 
+        {id: 2001, name: 'UEFA Champions League 2017/2018'}, 
+        {id: 2001, name: 'UEFA Champions League 2018/2019'},
+        {id: 2013, name: 'Brasileirao 2018'},
+        {id: 2014, name: 'España - La Liga 2018/2019'},
+        {id: 2019, name: 'Italia - Serie A 2018/2019'},
+        {id: 2021, name: 'Inglaterra - Premier League 2018/2019'}
+    ],
+
     //Indica la cantidad de fechas de cada liga
     leagueMatchdays: [{id:2013,matchdays:38}, {id:2014,matchdays:38}, {id:2021,matchdays:38}, {id:2019,matchdays:38}],
 

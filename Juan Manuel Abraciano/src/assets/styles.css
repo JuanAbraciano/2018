@@ -1,0 +1,40 @@
+/* #region Template general */
+body{
+    font-family: Arial, Helvetica, sans-serif; 
+}
+#container{
+    background-image: url('./images/cesped-fondo.jpg');
+    width:100vw;
+    height:100vh;
+}
+/* #endregion Template general */
+
+/* #region Top-Menu*/
+.el-menu * {    
+    text-decoration: none;
+}
+.el-menu--horizontal .el-menu .el-menu-item{
+    background-color:#00b300;
+}
+.menu-item{    
+    font-size: 20px;
+    color: white; 
+}
+.el-menu-item :hover, .el-submenu :hover{
+    color: #004d00;
+}
+#top-menu .el-menu-demo{
+    background-color: #00b300;
+}
+/* #endregion Top-Menu */
+
+/* #region Competition Matches Container*/
+#competition-matches-container #competition-name{
+    margin-top: 30px;
+    text-align: center;
+    font-weight: bold;
+}
+.el-table__header-wrapper{
+    display:none;
+}
+/* #endregion Competition Matches Container*/

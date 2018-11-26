@@ -1,14 +1,34 @@
 <template>
-    <div>
-        <div style="margin-top:20px; font-weight:bold">
-        Calendario
-        </div>
-  </div>
+  <section>
+    <daily-matches-container v-for="date in days" :key="" :date="date"></daily-matches-container>  
+  </section>
 </template>
 
 <script>
+import dailyMatchesContainer from '@/components/daily-matches-container'
+import apiService from '@/services/APIService'
+import moment from 'moment'
 
 export default {
-  name: 'calendario'
+  name: 'calendario',
+  components: {
+    dailyMatchesContainer
+  },
+  data(){
+    return{
+      today: moment(new Date()).format("YYYY-MM-DD"),
+      days: []
+    }
+  },
+  methods: {
+    setDates(){
+      for(let i = 0; i < 10; i++) {
+        this.days.push(moment(this.today).add(i, 'days').format("YYYY-MM-DD"));
+      }
+    }
+  },
+  created(){
+    this.setDates();
+  }
 }
 </script>

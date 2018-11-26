@@ -3,7 +3,7 @@ import utils from '@/assets/utils'
 
 const axiosInstance = axios.create({
     baseURL: 'https://api.football-data.org/v2/',
-    headers: {'X-Auth-Token': 'd739357133e84409a58114e7a7d87fa3' }
+    headers: {'X-Auth-Token': utils.token }
 });
 
 export default{
@@ -31,7 +31,7 @@ export default{
 /* #region Matches */
     getMatchesByDay(date){
         //FIXME
-        return axiosInstance.get('matches?competitions=2013,2014,2019,2021,2088,2018,2001,2000&dateFrom=2018-11-16&dateTo=' + date)
+        return axiosInstance.get('matches?competitions=2013,2014,2019,2021,2088,2018,2001,2000&dateFrom=' + date + '&dateTo=' + date)
         .then((response) => {
             return response.data.matches;
         });
