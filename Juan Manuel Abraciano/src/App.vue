@@ -3,7 +3,6 @@
     <top-menu></top-menu>
     <el-container id="container">
       <el-aside width="20%" ></el-aside>
-      <div id="block"></div>
       <el-main style="background-color:white; margin-top:5px;">
         <router-view :key="$route.fullPath"/>
       </el-main>

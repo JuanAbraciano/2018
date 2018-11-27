@@ -3,7 +3,6 @@
         {{stage}}
         <section v-for="group in groups" :key="group[0].homeTeam.id" class="cup-finals-groups">
            <cup-finals-match  v-for="match in group"  :match="match" :key="match.id"></cup-finals-match>
-            <!-- <article v-for="match in group" :match="match" :key="match.id" class="cup-finals-match"></article> -->
         </section>
     </section>
 </template>

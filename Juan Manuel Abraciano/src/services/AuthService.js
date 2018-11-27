@@ -8,7 +8,7 @@ const login = function(name, pass) {
     })
 }
 
-import utils from '@/assets/utils'
+import utils from '@/assets/utils.js'
 export default {
     login: login
 }

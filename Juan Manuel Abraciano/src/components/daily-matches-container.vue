@@ -9,7 +9,7 @@
                 {{msg}}
             </el-alert>
 
-            <competition-matches-container v-for="c in getCompetitions()" :competitionId="c" :displayCompetitionName="getCompetitions().length > 1" :matches="getCompetitionMatches(c)" :key="c"></competition-matches-container>
+            <competition-matches-container v-for="c in getCompetitions()" :competitionId="c" :displayCompetitionName="getCompetitions().length > 0" :matches="getCompetitionMatches(c)" :key="c"></competition-matches-container>
             <span v-if="noMatchesToday">Sin partidos</span>
         </article>
         <article v-else style="width:100%;text-align:center">

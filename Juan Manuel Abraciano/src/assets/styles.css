@@ -5,19 +5,7 @@ body{
 #container{
     background-image: url('./images/estadio-fondo.jpg');
     width:100vw;
-}
-#block{
-    filter: alpha(opacity=60);
-    /* IE */
-    -moz-opacity: 0.6;
-    /* Mozilla */
-    opacity: 0.6;
-    /* CSS3 */
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100vh;
+    height: 100vh;
 }
 /* #endregion Template general */
 

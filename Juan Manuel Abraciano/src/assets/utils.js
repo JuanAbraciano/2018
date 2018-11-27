@@ -14,11 +14,24 @@ export default{
     //Indica la cantidad de fechas de cada liga
     leagueMatchdays: [{id:2013,matchdays:38}, {id:2014,matchdays:38}, {id:2021,matchdays:38}, {id:2019,matchdays:38}],
 
+    //Indica las temporadas de cada copa
+    cupsSeasons: [
+        {competitionId:2001, year: 2017, name: '2017/2018'}, 
+        {competitionId:2001, year: 2018, name: '2018/2019'}, 
+        {competitionId:2000, year:2018, name: 'Rusia 2018'}
+    ],
+
     //Indica si una copa tiene formato de llaves y la cantidad de equipos en éstas
     cupInfo: [{id:2001,currentSeason:2018,hasBrackets:false,teamsInFinals:32}, {id:2000,currentSeason:2018,hasBrackets:true,teamsInFinals:32}],
 
     //Stages a ignorar al traer los partidos de una copa (son partidos preliminares de equipos medio falopa)
     stagesToIgnore: ['PRELIMINARY_FINAL','PRELIMINARY_SEMI_FINALS','1ST_QUALIFYING_ROUND','2ND_QUALIFYING_ROUND','3RD_QUALIFYING_ROUND','PLAY_OFF_ROUND'],
 
-    finalStages: ['ROUND_OF_32','ROUND_OF_16','QUARTER_FINALS','SEMI_FINALS','FINAL']
+    finalStages: [
+        {id:'ROUND_OF_32', name:'Diecisesiavos de final'},
+        {id:'ROUND_OF_16', name:'Octavos de final'},
+        {id:'QUARTER_FINALS', name:'Cuartos de final'},
+        {id:'SEMI_FINALS', name:'Semifinales'},
+        {id:'FINAL', name:'Final'}
+    ]
 }

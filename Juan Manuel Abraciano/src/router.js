@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import Router from '../node_modules/vue-router/dist/vue-router.esm.js'
 import Home from './views/Home.vue'
 import League from './views/League.vue'
 import Cup from './views/Cup.vue'
