@@ -1,55 +1,69 @@
-/* #region Template general */
-body{
-    font-family: Arial, Helvetica, sans-serif; 
-}
-#container{
-    background-image: url('./images/estadio-fondo.jpg');
-    width:100vw;
-    height: 100vh;
-}
-/* #endregion Template general */
+/* #region Layout general */
+    body{
+        font-family: Arial, Helvetica, sans-serif; 
+    }
+    #container{
+        background-image: url('./images/estadio-fondo.jpg');
+        width:100vw;
+        height: 100vh;
+    }
+    .competition-name-big{
+        background-color:#00b300;
+        font-weight:bold;
+        font-size:20px;
+        color:white;
+        padding:10px 10px 10px 10px;
+    }
+    .matches-date{
+        background-color:#00b300;
+        color:white;
+        font-weight:bold;
+        font-size:18px;
+        padding:10px 10px 10px 10px;
+    }
+/* #endregion Layout general */
 
 /* #region Top-Menu*/
-.el-menu * {    
-    text-decoration: none;
-}
-.el-menu--horizontal .el-menu .el-menu-item{
-    background-color:#00b300;
-}
-.menu-item{    
-    font-size: 20px;
-    color: white; 
-}
-.el-menu-item :hover, .el-submenu :hover{
-    color: #004d00;
-}
-#top-menu .el-menu-demo{
-    background-color: #00b300;
-}
+    .el-menu * {    
+        text-decoration: none;
+    }
+    .el-menu--horizontal .el-menu .el-menu-item{
+        background-color:#00b300;
+    }
+    .menu-item{    
+        font-size: 20px;
+        color: white; 
+    }
+    .el-menu-item :hover, .el-submenu :hover{
+        color: #004d00;
+    }
+    #top-menu .el-menu-demo{
+        background-color: #00b300;
+    }
 /* #endregion Top-Menu */
 
 /* #region Competition Matches Container*/
-#competition-matches-container #competition-name{
-    margin-top: 30px;
-    text-align: center;
-    font-weight: bold;
-}
-.el-table__header-wrapper{
-    display:none;
-}
+    #competition-matches-container #competition-name{
+        margin-top: 30px;
+        text-align: center;
+        font-weight: bold;
+    }
+    .el-table__header-wrapper{
+        display:none;
+    }
 /* #endregion Competition Matches Container*/
 
 /* #region Cup Finals */
-.cup-final-date-description{
-    color:white;
-    font-weight: bold;
-    background-color:black;
-}
-.cup-finals-groups{
-    margin-bottom: 10px;
+    .cup-final-date-description{
+        color:white;
+        font-weight: bold;
+        background-color:black;
+    }
+    .cup-finals-groups{
+        margin-bottom: 10px;
 
-}
-.cup-finals-match{
+    }
+    .cup-finals-match{
 
-}
+    }
 /* #region Cup Finals */

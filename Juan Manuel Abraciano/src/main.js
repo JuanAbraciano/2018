@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import ElementUI from '../node_modules/element-ui/lib/element-ui.common.js'
+import ElementUI from 'element-ui'
 import '../theme/index.css'
 
 Vue.use(ElementUI);

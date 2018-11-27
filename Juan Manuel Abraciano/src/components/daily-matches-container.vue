@@ -1,22 +1,24 @@
 <template>
-    <section>
-        <br>
-        <article>
-            <span>{{ formatedDate }}</span>
-        </article>
-        <article v-if="!loading">
-            <el-alert v-for="msg in errorList" :key="msg" title="Error:" type="error">
-                {{msg}}
-            </el-alert>
+    <div>
+        <header>
+            <div class="matches-date"><span>{{ formatedDate }}</span></div>
+        </header>
+        <section>
+            <article v-if="!loading">
+                <el-alert v-for="msg in errorList" :key="msg" title="Error:" type="error">
+                    {{msg}}
+                </el-alert>
 
-            <competition-matches-container v-for="c in getCompetitions()" :competitionId="c" :displayCompetitionName="getCompetitions().length > 0" :matches="getCompetitionMatches(c)" :key="c"></competition-matches-container>
-            <span v-if="noMatchesToday">Sin partidos</span>
-        </article>
-        <article v-else style="width:100%;text-align:center">
-            <img src="../assets/images/loading.gif" alt="loading">
-        </article>
-
-    </section>
+                <competition-matches-container v-for="c in getCompetitions()" :competitionId="c" :displayCompetitionName="getCompetitions().length > 0" :matches="getCompetitionMatches(c)" :key="c"></competition-matches-container>
+                <article style="text-align:center; margin:15px; font-weight:bold;">
+                    <span v-if="noMatchesToday" >Sin partidos</span>
+                </article>
+            </article>
+            <article v-else style="width:100%;text-align:center">
+                <img src="../assets/images/loading.gif" alt="loading">
+            </article>
+        </section>
+    </div>
 </template>
 
 <script>

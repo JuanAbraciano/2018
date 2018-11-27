@@ -32,6 +32,7 @@ export default{
         {id:'ROUND_OF_16', name:'Octavos de final'},
         {id:'QUARTER_FINALS', name:'Cuartos de final'},
         {id:'SEMI_FINALS', name:'Semifinales'},
+        {id: '3RD_PLACE', name:'Tercer puesto'},
         {id:'FINAL', name:'Final'}
     ]
 }

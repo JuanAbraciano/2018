@@ -1,25 +1,31 @@
 <template>
-    <section>
-        <article>
-            <span>{{competitionId}} - Fecha {{matchday || '-'}}</span>
-            <league-matchdays-container :competitionId="competitionId" :matchdays="matchdays" @changeMatchday="changeMatchday"></league-matchdays-container>
-        </article>
-        <article v-if="!loading">
-            <el-alert v-for="msg in errorList" :key="msg" title="Error:" type="error">
-                {{msg}}
-            </el-alert>
+    <div>
+        <header>            
+            <div class="competition-name-big"> {{getCompetitionName(competitionId)}} - Fecha {{matchday || '-'}}</div>
+        </header>
+        <nav style="text-align:center; margin-top:10px;">
+            <league-matchdays-container :competitionId="competitionId" :matchdays="matchdays" @changeMatchday="changeMatchday"></league-matchdays-container>            
+        </nav>
+        <section>
+            <article v-if="!loading">
+                <el-alert v-for="msg in errorList" :key="msg" title="Error:" type="error">
+                    {{msg}}
+                </el-alert>
 
-            <competition-matches-container :competitionId="competitionId" :matches="matches"></competition-matches-container>
-        </article>
-        <article v-else style="width:100%;text-align:center">
-            <img src="../assets/images/loading.gif" alt="loading">
-        </article>
-    </section>
+                <competition-matches-container :competitionId="competitionId" :matches="matches"></competition-matches-container>
+                <league-standings v-if="standings.length > 0" :standings="standings"></league-standings>
+            </article>
+            <article v-else style="width:100%;text-align:center">
+                <img src="../assets/images/loading.gif" alt="loading">
+            </article>
+        </section>
+    </div>
 </template>
 
 <script>
 import competitionMatchesContainer from '@/components/competition-matches-container'
 import leagueMatchdaysContainer from '@/components/leagues/league-matchdays-container'
+import leagueStandings from '@/components/leagues/league-standings'
 import apiService from '@/services/APIService'
 import moment from 'moment'
 import utils from '@/assets/utils'
@@ -27,8 +33,9 @@ import utils from '@/assets/utils'
 export default {
     name: 'league',
     components: {
+        leagueMatchdaysContainer,
         competitionMatchesContainer,
-        leagueMatchdaysContainer
+        leagueStandings
     },
     data(){
         return{
@@ -36,6 +43,7 @@ export default {
             matchday: 0,
             matchdays: 0,
             matches: [],
+            standings: [],
             loading: false,
             errorList: []
         }
@@ -43,6 +51,7 @@ export default {
     methods: {
         changeMatchday(matchday){
             this.loading = true;
+            this.errorList = [];
             if(matchday > 0){
                 apiService.getMatchesByCompetitionAndMatchday(this.competitionId, matchday)
                 .then((matches) => {
@@ -55,6 +64,9 @@ export default {
                     this.loading = false;
                 })
             }
+        },
+        getCompetitionName(competitionId){
+            return utils.competitionNames.find(comp => comp.id == competitionId).name;
         }
     },
     created(){
@@ -82,6 +94,14 @@ export default {
             this.errorList.push("No se pudo obtener la información de los partidos para esta fecha.");
             this.loading = false;
         });
+
+        apiService.getStandingsByCompetitionAndSeason(this.competitionId, 2018)
+            .then((response) => {
+                this.standings = response.data.standings[0].table;
+            })
+            .catch(() => {
+                this.errorList.push("No se pudo obtener la información de las posiciones.");
+            });
     }
 }
 </script>

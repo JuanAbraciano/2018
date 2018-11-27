@@ -1,25 +1,29 @@
 <template>
-    <section>
-        <article>
-            <span>{{competitionId}} - Temporada {{season || '-'}}</span>
+    <div>
+        <header>
+            <div  class="competition-name-big">
+                <span>{{getCompetitionName(competitionId)}} - Temporada {{season || '-'}}</span>
+            </div>
             <cup-seasons-container v-if="seasons.length > 1" :seasons="seasons" @changeSeason="changeSeason"></cup-seasons-container>
-        </article>
-        <article v-if="!loading">
-            <article v-if="errorList.length > 0">
-                <el-alert v-for="msg in errorList" :key="msg" title="Error:" type="error">
-                    {{msg}}
-                </el-alert>
-            </article>
+        </header>
+        <section>
+            <article v-if="!loading">
+                <article v-if="errorList.length > 0">
+                    <el-alert v-for="msg in errorList" :key="msg" title="Error:" type="error">
+                        {{msg}}
+                    </el-alert>
+                </article>
 
-            <article v-else>
-                <cup-finals-container v-for="stage in getFinalStages()" :key="stage.id" :stage="getStageName(stage)" :matches="getFinalMatches(stage)"></cup-finals-container>
-                <cup-group-container v-for="group in getGroups()" :key="group" :group="group" :matches="getGroupMatches(group)" :standings="getGroupStandings(group)">a</cup-group-container>
+                <article v-else>
+                    <cup-finals-container v-for="stage in getFinalStages()" :key="stage" :stage="getStageName(stage)" :matches="getFinalMatches(stage)"></cup-finals-container>
+                    <cup-group-container v-for="group in getGroups()" :key="group" :group="group" :matches="getGroupMatches(group)" :standings="getGroupStandings(group)">a</cup-group-container>
+                </article>
             </article>
-        </article>
-        <article v-else style="width:100%;text-align:center">
-            <img src="../assets/images/loading.gif" alt="loading">
-        </article>
-    </section>
+            <article v-else style="width:100%;text-align:center">
+                <img src="../assets/images/loading.gif" alt="loading">
+            </article>
+        </section>
+    </div>
 </template>
 
 <script>
@@ -54,7 +58,6 @@ export default {
         getGroups(){
             return [...new Set(this.groupMatches.map(match => match.group))].filter(group => group != null && (group.substring(0,5) == "Group")).sort();
         },
-
         //Partidos y Posiciones para cada grupo
         getGroupMatches(group){
             return this.groupMatches.filter(match => match.group != null && (match.group == group));
@@ -62,21 +65,20 @@ export default {
         getGroupStandings(group){
             return this.standings.find(standing => standing.stage == "GROUP_STAGE" && (standing.group.slice(-1) == group.slice(-1))).table;
         },
-
         //Idem getGroups()
         getFinalStages(){
             return [...new Set(this.finalMatches.map(match => match.stage))].reverse();
         },
-
         //Idem getGroupMatches()
         getFinalMatches(stage){
             return this.finalMatches.filter(match => match.stage != null && (match.stage == stage));
         },
-
         getStageName(stageId){
             return utils.finalStages.find(stage => stage.id == stageId).name;
         },
-
+         getCompetitionName(competitionId){
+            return utils.competitionNames.find(comp => comp.id == competitionId).name;
+        },
         changeSeason(season){
             this.loading = true;
             this.season = season;

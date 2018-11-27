@@ -1,4 +1,4 @@
-import Vuex from '../node_modules/vuex/dist/vuex.esm.js'
+import Vuex from 'vuex'
 import Vue from 'vue'
 
 Vue.use(Vuex)
