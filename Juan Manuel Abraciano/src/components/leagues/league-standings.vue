@@ -4,6 +4,7 @@
             :data="standings"
             :row-class-name="tableRowClassName"
             border
+            stripe
             style="width: 100%">
             <el-table-column
                 prop="position"
