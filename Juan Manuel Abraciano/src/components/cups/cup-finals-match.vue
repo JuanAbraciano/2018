@@ -10,10 +10,10 @@
                 style="width: 100%"
                 class="cup-finals-match-inner">
                 <el-table-column 
-                    width="70px">
+                    width="110px">
                     <template slot-scope="scope">
-                        <div style="padding:0px;">
-                            <span style="font-weight:bold; font-size:11px;">
+                        <div :class="scope.row.class">
+                            <span>
                                 {{scope.row.status}}
                             </span>
                         </div>
@@ -89,11 +89,25 @@ export default {
             formatedMatch.awayGoals = awayScore;
 
             switch (this.match.status) {
-                case "FINISHED": formatedMatch.status = "Finalizado"; break;
-                case "IN_PLAY": formatedMatch.status = "Jugando"; break;
-                case "PAUSED": formatedMatch.status = "Entretiempo"; break;
-                case "SCHEDULED": formatedMatch.status = moment(match.utcDate).format("HH:mm"); break;
-                default: formatedMatch.status = "";
+               case "FINISHED": 
+                        formatedMatch.status = "Finalizado"; 
+                        formatedMatch.class = "time-indicator finished";
+                        break;
+                    case "IN_PLAY":
+                        formatedMatch.status = "Jugando"; 
+                        formatedMatch.class = "time-indicator playing";
+                        break;
+                    case "PAUSED": 
+                        formatedMatch.status = "Entretiempo"; 
+                        formatedMatch.class = "time-indicator playing";
+                        break;
+                    case "SCHEDULED": 
+                        formatedMatch.status = moment(match.utcDate).format("HH:mm"); 
+                        formatedMatch.class = "time-indicator scheduled";
+                        break;
+                    default: 
+                        formatedMatch.status = "";
+                        formatedMatch.class = "time-indicator";
             };
 
             return [formatedMatch];

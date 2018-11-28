@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <section class="sombreado">
         <header class="group-name">
             {{group.replace("Group", "Grupo")}}
         </header>
@@ -7,7 +7,7 @@
             <cup-group-standings :standings="standings" style="margin-bottom:10px;"></cup-group-standings>
             <cup-group-matches v-for="date in getDates()" :key="date" :date="date" :matches="getDailyMatches(date)"></cup-group-matches>
         </section>
-    </div>
+    </section>
 </template>
 
 <script>

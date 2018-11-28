@@ -1,44 +1,53 @@
 <template>
-    <section id="competition-matches-container">   
-        <div id="competition-name" v-if="displayCompetitionName">
-            <span>{{competitionName}}</span>
-        </div>
-        <el-alert v-for="msg in errorList" :key="msg" title="Error:" type="error">
-            {{msg}}
-        </el-alert>
-        <el-table
-            v-if="!errorList.length"
-            :data="getFormatedMatches" 
-            stripe 
-            style="width: 100%">
-            <el-table-column 
-                width="110px">
-                <template slot-scope="scope">
-                    <div style="border-right: 1px solid darkgray">
-                    {{scope.row.status}}
-                    </div>
-                </template>
-            </el-table-column>
-            <el-table-column 
-                prop="homeTeam">
-            </el-table-column>
-            <el-table-column 
-                prop="homeGoals"
-                width="40px">
-            </el-table-column>
-            <el-table-column 
-                prop="awayGoals"
-                width="40px">
-            </el-table-column>
-            <el-table-column>
-                <template slot-scope="scope">
-                    <div style="float:right">
-                    {{scope.row.awayTeam}}
-                    </div>
-                </template>
-            </el-table-column>
-        </el-table>
-    </section>
+    <div class="sombreado">
+        <section v-for="day in getDays()" :key="day">
+            <header v-if="displayDate" class="league-date-description">
+                <div><span>{{ formatDay(day) }}</span></div>
+            </header>
+            <section id="competition-matches-container">   
+                <div id="competition-name" v-if="displayCompetitionName">
+                    <span>{{competitionName}}</span>
+                </div>
+                <el-alert v-for="msg in errorList" :key="msg" title="Error:" type="error">
+                    {{msg}}
+                </el-alert>
+                <el-table
+                    v-if="!errorList.length"
+                    :data="getFormatedMatches(day)" 
+                    stripe 
+                    style="width: 100%">
+                    <el-table-column 
+                        width="110px">
+                        <template slot-scope="scope">
+                            <div :class="scope.row.class">
+                                <span>
+                                    {{scope.row.status}}
+                                </span>
+                            </div>
+                        </template>
+                    </el-table-column>
+                    <el-table-column 
+                        prop="homeTeam">
+                    </el-table-column>
+                    <el-table-column 
+                        prop="homeGoals"
+                        width="40px">
+                    </el-table-column>
+                    <el-table-column 
+                        prop="awayGoals"
+                        width="40px">
+                    </el-table-column>
+                    <el-table-column>
+                        <template slot-scope="scope">
+                            <div style="float:right">
+                            {{scope.row.awayTeam}}
+                            </div>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </section>
+        </section>
+    </div>
 </template>
 
 <script>
@@ -48,20 +57,29 @@ import moment from 'moment'
 
 export default {
     name: 'competitionMatchesContainer',
-    props: ['competitionId','displayCompetitionName','matches'],
+    props: ['competitionId','displayCompetitionName','matches', 'displayDate'],
     data() {
         return {
+            days: [],
             competitionName: utils.competitionNames.find(comp => comp.id == this.competitionId).name,
             errorList: []
         }
     },
-    computed: {
-        getFormatedMatches(){
+    methods:{
+        getDays(){
+            return [...new Set(this.matches.map(match => moment(match.utcDate).format("YYYY-MM-DD")))];
+        },
+        formatDay(day){
+            moment.locale('es');
+            return moment(day).format('dddd DD [de] MMMM');
+        },
+        getFormatedMatches(day){
             //Creo un arreglo con solamente los datos que necesito de los partidos
-            let that = this;            
+            let that = this;          
+            const dayMatches = that.matches.filter(match => moment(match.utcDate).format("YYYY-MM-DD") == day);  
             let formatedMatches = [];
             try{
-                that.matches.forEach(function(match) {
+                dayMatches.forEach(function(match) {
                     let newMatch = {
                         homeTeam: '',
                         awayTeam: '',
@@ -94,11 +112,25 @@ export default {
                     };
 
                     switch (match.status) {
-                        case "FINISHED": newMatch.status = "Finalizado"; break;
-                        case "IN_PLAY": newMatch.status = "Jugando"; break;
-                        case "PAUSED": newMatch.status = "Entretiempo"; break;
-                        case "SCHEDULED": newMatch.status = moment(match.utcDate).format("HH:mm"); break;
-                        default: newMatch.status = "";
+                        case "FINISHED": 
+                            newMatch.status = "Finalizado"; 
+                            newMatch.class = "time-indicator finished";
+                            break;
+                        case "IN_PLAY":
+                            newMatch.status = "Jugando"; 
+                            newMatch.class = "time-indicator playing";
+                            break;
+                        case "PAUSED": 
+                            newMatch.status = "Entretiempo"; 
+                            newMatch.class = "time-indicator playing";
+                            break;
+                        case "SCHEDULED": 
+                            newMatch.status = moment(match.utcDate).format("HH:mm"); 
+                            newMatch.class = "time-indicator scheduled";
+                            break;
+                        default: 
+                            newMatch.status = "";
+                            newMatch.class = "time-indicator";
                     };
 
                     formatedMatches.push(newMatch);

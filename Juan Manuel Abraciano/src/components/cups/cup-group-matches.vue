@@ -10,8 +10,10 @@
             <el-table-column 
                 width="110px">
                 <template slot-scope="scope">
-                    <div style="border-right: 1px solid darkgray">
-                    {{scope.row.status}}
+                    <div :class="scope.row.class">
+                        <span>
+                            {{scope.row.status}}
+                        </span>
                     </div>
                 </template>
             </el-table-column>
@@ -51,13 +53,14 @@ export default {
             let that = this;            
             let formatedMatches = [];
 
-            that.matches.forEach(function(match) {
+            that.matches.forEach((match) => {
                 let newMatch = {
                     homeTeam: '',
                     awayTeam: '',
                     homeGoals: '',
                     awayGoals: '',
-                    status: ''
+                    status: '',
+                    class: ''
                 };
 
                 newMatch.homeTeam = match.homeTeam.name;
@@ -84,11 +87,25 @@ export default {
                 };
 
                 switch (match.status) {
-                    case "FINISHED": newMatch.status = "Finalizado"; break;
-                    case "IN_PLAY": newMatch.status = "Jugando"; break;
-                    case "PAUSED": newMatch.status = "Entretiempo"; break;
-                    case "SCHEDULED": newMatch.status = moment(match.utcDate).format("HH:mm"); break;
-                    default: newMatch.status = "";
+                    case "FINISHED": 
+                        newMatch.status = "Finalizado"; 
+                        newMatch.class = "time-indicator finished";
+                        break;
+                    case "IN_PLAY":
+                        newMatch.status = "Jugando"; 
+                        newMatch.class = "time-indicator playing";
+                        break;
+                    case "PAUSED": 
+                        newMatch.status = "Entretiempo"; 
+                        newMatch.class = "time-indicator playing";
+                        break;
+                    case "SCHEDULED": 
+                        newMatch.status = moment(match.utcDate).format("HH:mm"); 
+                        newMatch.class = "time-indicator scheduled";
+                        break;
+                    default: 
+                        newMatch.status = "";
+                        newMatch.class = "time-indicator";
                 };
 
                 formatedMatches.push(newMatch);

@@ -1,7 +1,7 @@
 <template>
     <div>
-        <header>
-            <div class="matches-date"><span>{{ formatedDate }}</span></div>
+        <header class="matches-date">
+            <div><span>{{ formatedDate }}</span></div>
         </header>
         <section>
             <article v-if="!loading">
@@ -9,7 +9,7 @@
                     {{msg}}
                 </el-alert>
 
-                <competition-matches-container v-for="c in getCompetitions()" :competitionId="c" :displayCompetitionName="getCompetitions().length > 0" :matches="getCompetitionMatches(c)" :key="c"></competition-matches-container>
+                <competition-matches-container v-for="c in getCompetitions()" :competitionId="c" :displayCompetitionName="getCompetitions().length > 0" :matches="getCompetitionMatches(c)" :displayDate="false" :key="c"></competition-matches-container>
                 <article style="text-align:center; margin:15px; font-weight:bold;">
                     <span v-if="noMatchesToday" >Sin partidos</span>
                 </article>

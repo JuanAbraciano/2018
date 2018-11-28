@@ -30,7 +30,6 @@ export default{
 
 /* #region Matches */
     getMatchesByDay(date){
-        //FIXME
         return axiosInstance.get('matches?competitions=2013,2014,2019,2021,2088,2018,2001,2000&dateFrom=' + date + '&dateTo=' + date)
         .then((response) => {
             return response.data.matches;
@@ -77,7 +76,6 @@ export default{
     },
 
     getMatchDaysForCompetition(competitionId){
-        //FIXME
         return axiosInstance.get('competitions/' + competitionId + '/matches?season=2018')
         .then((response) => {
             return  [...new Set(response.data.matches.map(match => match.matchday))]

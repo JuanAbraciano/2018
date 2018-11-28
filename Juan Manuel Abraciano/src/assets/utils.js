@@ -22,7 +22,7 @@ export default{
     ],
 
     //Indica si una copa tiene formato de llaves y la cantidad de equipos en éstas
-    cupInfo: [{id:2001,currentSeason:2018,hasBrackets:false,teamsInFinals:32}, {id:2000,currentSeason:2018,hasBrackets:true,teamsInFinals:32}],
+    cupInfo: [{id:2001,currentSeason:2018}, {id:2000,currentSeason:2018}],
 
     //Stages a ignorar al traer los partidos de una copa (son partidos preliminares de equipos medio falopa)
     stagesToIgnore: ['PRELIMINARY_FINAL','PRELIMINARY_SEMI_FINALS','1ST_QUALIFYING_ROUND','2ND_QUALIFYING_ROUND','3RD_QUALIFYING_ROUND','PLAY_OFF_ROUND'],

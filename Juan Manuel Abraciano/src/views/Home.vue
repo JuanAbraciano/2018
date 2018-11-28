@@ -1,7 +1,11 @@
 <template>
     <div id="home">
-        <span>Partidos de hoy</span>
-        <daily-matches-container :date="date"></daily-matches-container>       
+        <header class="competition-name-big" style="margin-bottom:5px;">
+            <span>Partidos de hoy</span>
+        </header>
+        <section>
+            <daily-matches-container :date="date"></daily-matches-container>       
+        </section>
     </div>
 </template>
 

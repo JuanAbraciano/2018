@@ -12,9 +12,6 @@
         height:100vh;
         padding-bottom: 100px;
     }
-    #top-menu{
-        z-index:100;
-    }
     #container{
         width: 100%;
         height: 90vh;
@@ -23,18 +20,22 @@
         width: 15% !important;
     }
     .competition-name-big{
-        background-color:#00b300;
+        background-color:#003300;
         font-weight:bold;
         font-size:20px;
         color:white;
         padding:10px 10px 10px 10px;
     }
     .matches-date{
-        background-color:#00b300;
+        background-color:#006600;
         color:white;
         font-weight:bold;
         font-size:18px;
-        padding:10px 10px 10px 10px;
+        padding:6px 10px 14px 50px;
+        height: 11px;
+    }
+    .sombreado{
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
 /* #endregion Layout general */
 
@@ -43,23 +44,41 @@
         text-decoration: none;
     }
     .el-menu--horizontal .el-menu .el-menu-item{
-        background-color:#00b300;
+        background-color:#24754d;
     }
-    .menu-item{    
-        font-size: 20px;
+    .el-menu.el-menu--horizontal{
+        border: none;
+    }
+    .el-menu--horizontal>.el-menu-item.is-active, .el-menu--horizontal>.el-submenu.is-active .el-submenu__title{
+        border-bottom:3px solid white;
+    }
+    .el-menu--popup{
+        padding:0px;
+    }
+    .el-submenu__icon-arrow.el-icon-arrow-down{
+        font-weight: bold;
         color: white; 
     }
-    .el-menu-item :hover, .el-submenu :hover{
-        color: #004d00;
+    .menu-item{    
+        font-size: 18px;
+        font-weight:bold;
+        color: white; 
+    }
+    .el-submenu :hover{
+        color:black;
+    }
+    .el-menu-item :hover{
+        color: darkgrey;
     }
     #top-menu .el-menu-demo{
-        background-color: #00b300;
+        background-color: #24754d;
     }
 /* #endregion Top-Menu */
 
 /* #region Competition Matches Container*/
     #competition-matches-container #competition-name{
         margin-top: 30px;
+        padding-top:10px;
         text-align: center;
         font-weight: bold;
     }
@@ -73,7 +92,7 @@
     }
     .cup-finals-match{
         border-bottom: 1px solid black; 
-        margin: 5px;
+        margin: 5px 5px 10px 5px;
     }
     .cup-finals-match-single{
         width: 50%;
@@ -92,7 +111,7 @@
         background-color:black;
     }
     .stage-name{
-        background-color:#00b300;
+        background-color:#006600;
         color:white;
         font-weight:bold;
         font-size:16px;
@@ -106,24 +125,70 @@
         font-size:16px;
         padding: 3px;
     }
-/* #region Cup */
+    .seasonActive{
+        color: #47d147;
+        border-bottom: 1px solid;
+    }
+/* #endregion Cup */
+
+/* #region League */
+    .el-pager li.active{
+        color: #47d147;
+        border-bottom: 1px solid;
+    }
+    .league-date-description{
+        background-color:#006600;
+        color:white;
+        font-weight:bold;
+        font-size:14px;
+        padding:6px 10px 14px 30px;
+        height: 8px;
+    }
+/* #endregion League */
+
+/* #region Login */
+    .el-form{
+        padding-top: 30px;
+    }
+    input[type="text"]{
+        width:300px;
+    }
+/* #enedregion Login */
+
+/* #region Varios */
+    .time-indicator{
+        margin: 0 3px 0 3px;
+        padding:0px;
+        text-align:center;
+        font-weight:bold;
+        font-size:11px;
+    }
+    .time-indicator.finished{
+        background-color: #184e33;
+        color:white;
+    }
+    .time-indicator.playing{
+        background-color: red;
+        color:white;
+    }
+/* #endregion Varios */
 
 /* #region A little bit of responsiveness*/
-@media screen and (max-width: 800px){
-    .el-aside{
-        width: 5% !important;
+    @media screen and (max-width: 800px){
+        .el-aside{
+            width: 5% !important;
+        }
     }
-}
-@media screen and (min-width: 801px) and (max-width: 1370px){
-    .el-aside{
-        width: 10% !important;
+    @media screen and (min-width: 801px) and (max-width: 1370px){
+        .el-aside{
+            width: 10% !important;
+        }
     }
-}
-@media screen and (min-width: 1371px){
-    .el-aside{
-        width: 15% !important;
+    @media screen and (min-width: 1371px){
+        .el-aside{
+            width: 15% !important;
+        }
     }
-}
 /* @media screen and (min-width: 1301px) {
     .el-aside{
         width: 20% !important;

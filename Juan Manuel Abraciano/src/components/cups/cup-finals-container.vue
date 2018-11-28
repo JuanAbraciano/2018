@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="sombreado">
         <header style="margin:5px 0px 5px 0px;">
             <div class="stage-name">
                 <span>{{stage}}</span>
@@ -37,7 +37,7 @@ export default {
     methods: {
         getGroups(){
             const that = this;
-            this.matches.forEach(function(match){
+            this.matches.forEach((match) => {
                 if(!that.groups.length) {
                     that.groups.push([match]);
                 } else {

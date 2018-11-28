@@ -2,11 +2,13 @@
     <div>
         <header>
             <div class="competition-name-big">
-                <span>{{getCompetitionName(competitionId)}} - Temporada {{season || '-'}}</span>
+                <span>{{getCompetitionName(competitionId)}}</span>
             </div>
-            <cup-seasons-container v-if="seasons.length > 1" :seasons="seasons" @changeSeason="changeSeason"></cup-seasons-container>
         </header>
         <section>
+            <cup-seasons-container v-if="seasons.length > 1" :seasons="seasons" 
+                :currentSeason="season" @changeSeason="changeSeason"
+                style="margin-bottom:10px;"></cup-seasons-container>
             <article v-if="!loading">
                 <article v-if="errorList.length > 0">
                     <el-alert v-for="msg in errorList" :key="msg" title="Error:" type="error">

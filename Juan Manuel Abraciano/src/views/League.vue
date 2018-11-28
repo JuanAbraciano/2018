@@ -3,17 +3,18 @@
         <header>            
             <div class="competition-name-big"> {{getCompetitionName(competitionId)}} - Fecha {{matchday || '-'}}</div>
         </header>
-        <nav style="text-align:center; margin-top:10px;">
-            <league-matchdays-container :competitionId="competitionId" :matchdays="matchdays" @changeMatchday="changeMatchday"></league-matchdays-container>            
-        </nav>
+        
         <section>
             <article v-if="!loading">
+                <section style="text-align:center; margin-top:10px;">
+                    <league-matchdays-container :competitionId="competitionId" :matchdays="matchdays" :currentMatchday="matchday" @changeMatchday="changeMatchday"></league-matchdays-container>            
+                </section>
                 <el-alert v-for="msg in errorList" :key="msg" title="Error:" type="error">
                     {{msg}}
                 </el-alert>
 
-                <competition-matches-container :competitionId="competitionId" :matches="matches"></competition-matches-container>
-                <league-standings v-if="standings.length > 0" :standings="standings"></league-standings>
+                <competition-matches-container :competitionId="competitionId" :matches="matches" :displayDate="true"></competition-matches-container>
+                <league-standings v-if="standings.length > 0" :standings="standings" style="margin-top:30px;"></league-standings>
             </article>
             <article v-else style="width:100%;text-align:center">
                 <img src="../assets/images/loading.gif" alt="loading">

@@ -1,13 +1,17 @@
 <template>
   <div id="app">
-    <top-menu></top-menu>
-    <el-container id="container">
-      <el-aside></el-aside>
-      <el-main style="background-color:white; margin-top:5px;">
-        <router-view :key="$route.fullPath"/>
-      </el-main>
-      <el-aside></el-aside>
-    </el-container>
+    <header>
+      <top-menu></top-menu>
+    </header>
+    <section>
+      <el-container id="container">
+        <el-aside></el-aside>
+        <el-main style="background-color:white; margin-top:5px;">
+          <router-view :key="$route.fullPath"/>
+        </el-main>
+        <el-aside></el-aside>
+      </el-container>
+    </section>
   </div>
 </template>
 
@@ -21,10 +25,6 @@ export default {
   name: 'app',
   components: {
     topMenu
-  },
-  data(){
-    return{
-    }
   }
 }
 </script>

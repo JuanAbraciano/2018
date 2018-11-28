@@ -2,10 +2,10 @@
    <section>
        <el-form :model="personForm" :rules="rules" ref="personForm" label-width="120px" class="demo-ruleForm">
            <el-form-item label="Nombre" prop="user">
-                <el-input v-model="personForm.user" @change="cleanError()"></el-input>
+                <el-input v-model="personForm.user" @change="cleanError()" @keyup.13.native="login('personForm')"></el-input>
             </el-form-item>
             <el-form-item label="Contraseña" prop="password">
-                <el-input v-model="personForm.password" @change="cleanError()"></el-input>
+                <el-input v-model="personForm.password" @change="cleanError()" @keyup.13.native="login('personForm')"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="login('personForm')">Ingresar</el-button>
