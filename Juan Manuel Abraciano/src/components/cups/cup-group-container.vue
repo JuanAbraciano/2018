@@ -1,9 +1,13 @@
 <template>
-    <section>
-        {{group}}
-        <cup-group-standings :standings="standings"></cup-group-standings>
-        <cup-group-matches v-for="date in getDates()" :key="date" :date="date" :matches="getDailyMatches(date)"></cup-group-matches>
-    </section>
+    <div>
+        <header class="group-name">
+            {{group.replace("Group", "Grupo")}}
+        </header>
+        <section>
+            <cup-group-standings :standings="standings" style="margin-bottom:10px;"></cup-group-standings>
+            <cup-group-matches v-for="date in getDates()" :key="date" :date="date" :matches="getDailyMatches(date)"></cup-group-matches>
+        </section>
+    </div>
 </template>
 
 <script>

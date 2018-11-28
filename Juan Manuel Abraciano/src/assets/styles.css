@@ -1,11 +1,26 @@
 /* #region Layout general */
     body{
+        overflow-y: hidden;
         font-family: Arial, Helvetica, sans-serif; 
     }
+    #app{
+        background-image: url('./images/estadio-fondo-2.jpg');        
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        height:100vh;
+        padding-bottom: 100px;
+    }
+    #top-menu{
+        z-index:100;
+    }
     #container{
-        background-image: url('./images/estadio-fondo.jpg');
-        width:100vw;
-        height: 100vh;
+        width: 100%;
+        height: 90vh;
+    }
+    .el-aside{
+        width: 15% !important;
     }
     .competition-name-big{
         background-color:#00b300;
@@ -53,17 +68,65 @@
     }
 /* #endregion Competition Matches Container*/
 
-/* #region Cup Finals */
-    .cup-final-date-description{
-        color:white;
-        font-weight: bold;
-        background-color:black;
-    }
+/* #region Cup */
     .cup-finals-groups{
-        margin-bottom: 10px;
-
     }
     .cup-finals-match{
-
+        border-bottom: 1px solid black; 
+        margin: 5px;
     }
-/* #region Cup Finals */
+    .cup-finals-match-single{
+        width: 50%;
+        margin-right: auto;
+        margin-left: auto;
+    }
+    .cup-finals-match-inner td .cell{
+        text-align:center;
+        padding: 6px 1px 6px 1px !important;
+    }
+    .cup-final-date-description{
+        padding:3px;
+        font-weight: normal;
+        font-size:15px;
+        color:white;
+        background-color:black;
+    }
+    .stage-name{
+        background-color:#00b300;
+        color:white;
+        font-weight:bold;
+        font-size:16px;
+        padding:5px 10px 5px 10px;
+        text-align:center;
+    }
+    .group-name{
+        background-color:#00b300;
+        color:white;
+        font-weight:normal;
+        font-size:16px;
+        padding: 3px;
+    }
+/* #region Cup */
+
+/* #region A little bit of responsiveness*/
+@media screen and (max-width: 800px){
+    .el-aside{
+        width: 5% !important;
+    }
+}
+@media screen and (min-width: 801px) and (max-width: 1370px){
+    .el-aside{
+        width: 10% !important;
+    }
+}
+@media screen and (min-width: 1371px){
+    .el-aside{
+        width: 15% !important;
+    }
+}
+/* @media screen and (min-width: 1301px) {
+    .el-aside{
+        width: 20% !important;
+    }
+} */
+/* #region A little bit of responsiveness*/

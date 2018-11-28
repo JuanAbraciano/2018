@@ -1,6 +1,6 @@
 <template>
-    <section id="cup-group-matches">   
-        <article id="date-description">
+    <section class="cup-group-matches">   
+        <article class="cup-final-date-description">
             <span>{{formatedDate}}</span>
         </article>
         <el-table

@@ -30,8 +30,12 @@
                 prop="awayGoals"
                 width="40px">
             </el-table-column>
-            <el-table-column 
-                prop="awayTeam">
+            <el-table-column>
+                <template slot-scope="scope">
+                    <div style="float:right">
+                    {{scope.row.awayTeam}}
+                    </div>
+                </template>
             </el-table-column>
         </el-table>
     </section>

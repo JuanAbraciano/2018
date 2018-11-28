@@ -1,10 +1,20 @@
 <template>
-    <section>
-        {{stage}}
-        <section v-for="group in groups" :key="group[0].homeTeam.id" class="cup-finals-groups">
-           <cup-finals-match  v-for="match in group"  :match="match" :key="match.id"></cup-finals-match>
+    <div>
+        <header style="margin:5px 0px 5px 0px;">
+            <div class="stage-name">
+                <span>{{stage}}</span>
+            </div>
+        </header>
+        <section>
+            <el-row>
+                <div v-for="group in groups" :key="group[0].homeTeam.id" class="cup-finals-groups">
+                    <el-col :span="groups.length > 1 ? 12: 24" v-for="match in group" :key="match.id">
+                        <cup-finals-match :match="match" :class="groups.length > 1 ? '' : ' cup-finals-match-single center'"></cup-finals-match>
+                    </el-col>
+                </div>
+            </el-row>
         </section>
-    </section>
+    </div>
 </template>
 
 <script>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <header>
-            <div  class="competition-name-big">
+            <div class="competition-name-big">
                 <span>{{getCompetitionName(competitionId)}} - Temporada {{season || '-'}}</span>
             </div>
             <cup-seasons-container v-if="seasons.length > 1" :seasons="seasons" @changeSeason="changeSeason"></cup-seasons-container>
@@ -15,8 +15,9 @@
                 </article>
 
                 <article v-else>
-                    <cup-finals-container v-for="stage in getFinalStages()" :key="stage" :stage="getStageName(stage)" :matches="getFinalMatches(stage)"></cup-finals-container>
-                    <cup-group-container v-for="group in getGroups()" :key="group" :group="group" :matches="getGroupMatches(group)" :standings="getGroupStandings(group)">a</cup-group-container>
+                    <cup-finals-container v-for="stage in getFinalStages()" :key="stage" :stage="getStageName(stage)" :matches="getFinalMatches(stage)" style="margin-bottom:20px;"></cup-finals-container>
+                    <div v-if="getGroups().length > 0" class="stage-name" style="margin-bottom:5px;">Fase de grupos</div>
+                    <cup-group-container v-for="group in getGroups()" :key="group" :group="group" :matches="getGroupMatches(group)" :standings="getGroupStandings(group)" style="margin-bottom:20px;">a</cup-group-container>
                 </article>
             </article>
             <article v-else style="width:100%;text-align:center">
